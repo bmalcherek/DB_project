@@ -1,56 +1,56 @@
 from rest_framework import serializers
-from .models import *
+from . import models
 
 
 class CountrySerializer (serializers.ModelSerializer):
     class Meta:
-        model = Country
+        model = models.Country
         fields = '__all__'
 
 
 class AirportSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Airport
+        model = models.Airport
         fields = '__all__'
 
 
 class AirplaneSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Airplane
+        model = models.Airplane
         fields = '__all__'
 
 
 class AirlineSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Airline
+        model = models.Airline
         fields = '__all__'
 
 
 class CrewSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Crew
+        model = models.Crew
         fields = '__all__'
 
 
 class CrewMemberSerializer (serializers.ModelSerializer):
     class Meta:
-        model = CrewMember
+        model = models.CrewMember
         fields = '__all__'
 
 
 class FlightSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Flight
+        model = models.Flight
         fields = '__all__'
 
 
 class ReservationSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Reservation
+        model = models.Reservation
         fields = '__all__'
 
 
 class LuggageSerializer (serializers.ModelSerializer):
     class Meta:
-        model = Luggage
+        model = models.Luggage
         fields = '__all__'

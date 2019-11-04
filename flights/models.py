@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 
 
 class Country (models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     continent = models.CharField(max_length=50)
     language = models.CharField(max_length=100)
     currency = models.CharField(max_length=100)
 
 
 class Airport (models.Model):
-    IATA_code = models.CharField(max_length=3)
-    ICAO_code = models.CharField(max_length=4)
+    IATA_code = models.CharField(max_length=3, unique=True)
+    ICAO_code = models.CharField(max_length=4, unique=True)
     name = models.CharField(max_length=200)
     country = models.ForeignKey(Country, on_delete=models.PROTECT)
 
@@ -19,7 +19,7 @@ class Airport (models.Model):
 class Airplane (models.Model):
     name = models.CharField(max_length=200)
     manufacturer = models.CharField(max_length=100)
-    symbol = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=100, unique=True)
     produced = models.DateField()
 
 
