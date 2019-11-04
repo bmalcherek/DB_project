@@ -6,7 +6,7 @@ class Country (models.Model):
     name = models.CharField(max_length=200)
     continent = models.CharField(max_length=50)
     language = models.CharField(max_length=100)
-    currency = models.CharField( max_length=100) 
+    currency = models.CharField(max_length=100)
 
 
 class Airport (models.Model):
@@ -44,11 +44,14 @@ class CrewMember (models.Model):
 
 class Flight (models.Model):
     flight_number = models.CharField(max_length=50)
-    airline =  models.ForeignKey(Airline, on_delete=models.CASCADE)
-    from_airport = models.ForeignKey(Airport, on_delete=models.PROTECT, related_name='from+')
-    to_airport = models.ForeignKey(Airport, on_delete=models.PROTECT, related_name='to+')
+    airline = models.ForeignKey(Airline, on_delete=models.CASCADE)
+    from_airport = models.ForeignKey(
+        Airport, on_delete=models.PROTECT, related_name='from+')
+    to_airport = models.ForeignKey(
+        Airport, on_delete=models.PROTECT, related_name='to+')
     crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
-    airplane = models.ForeignKey(Airplane, on_delete=models.SET_NULL, null=True)
+    airplane = models.ForeignKey(
+        Airplane, on_delete=models.SET_NULL, null=True)
     departure_date = models.DateField()
     arrival_date = models.DateField()
 
