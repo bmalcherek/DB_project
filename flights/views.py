@@ -1,62 +1,77 @@
-from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import generics
 
-from django.http import JsonResponse
-
-from .serializers import CountrySerializer, AirportSerializer, AirplaneSerializer
-from .models import Country, Airport, Airplane
-
-
-@api_view(['GET', 'POST'])
-def countries_list_view(request):
-    if request.method == 'GET':
-        queryset = Country.objects.all()
-        serializer = CountrySerializer(queryset, many=True)
-
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
-
-    elif request.method == 'POST':
-        serializer = CountrySerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET', 'POST'])
-def airports_list_view(request):
-    if request.method == 'GET':
-        queryset = Airport.objects.all()
-        serializer = AirportSerializer(queryset, many=True)
-
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
-
-    elif request.method == 'POST':
-        serializer = AirportSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from .serializers import (
+    CountrySerializer,
+    AirportSerializer,
+    AirplaneModelSerializer,
+    AirplaneSerializer,
+    AirlineSerializer,
+    CrewSerializer,
+    CrewMemberSerializer,
+    FlightSerializer,
+    ReservationSerializer,
+    LuggageSerializer
+)
+from .models import (
+    Country,
+    Airport,
+    AirplaneModel,
+    Airplane,
+    Airline,
+    Crew,
+    CrewMember,
+    Flight,
+    Reservation,
+    Luggage
+)
 
 
-@api_view(['GET', 'POST'])
-def airplanes_list_view(request):
-    if request.method == 'GET':
-        queryset = Airplane.objects.all()
-        serializer = AirplaneSerializer(queryset, many=True)
+class CountriesList (generics.ListAPIView):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
 
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
-    elif request.method == 'POST':
-        serializer = AirplaneSerializer(data=request.data)
+class AirportsList (generics.ListAPIView):
+    queryset = Airport.objects.all()
+    serializer_class = AirlineSerializer
 
-        if serializer.is_valid():
-            serializer.save()
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class AirplaneModelsList (generics.ListAPIView):
+    queryset = AirplaneModel.objects.all()
+    serializer_class = AirplaneModelSerializer
+
+
+class AirplanesList (generics.ListAPIView):
+    queryset = Airplane.objects.all()
+    serializer_class = AirplaneSerializer
+
+
+class AirlinesList (generics.ListAPIView):
+    queryset = Airline.objects.all()
+    serializer_class = AirlineSerializer
+
+
+class CrewsList (generics.ListAPIView):
+    queryset = Crew.objects.all()
+    serializer_class = CrewSerializer
+
+
+class CrewMembersList (generics.ListAPIView):
+    queryset = CrewMember.objects.all()
+    serializer_class = CrewMemberSerializer
+
+
+class FlightsList (generics.ListAPIView):
+    queryset = Flight.objects.all()
+    serializer_class = FlightSerializer
+
+
+class ReservationsList (generics.ListAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+
+class LuggagesList (generics.ListAPIView):
+    queryset = Luggage.objects.all()
+    serializer_class =  LuggageSerializer

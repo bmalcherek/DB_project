@@ -16,11 +16,16 @@ class Airport (models.Model):
     country = models.ForeignKey(Country, on_delete=models.PROTECT)
 
 
-class Airplane (models.Model):
+class AirplaneModel (models.Model):
     name = models.CharField(max_length=200)
     manufacturer = models.CharField(max_length=100)
     symbol = models.CharField(max_length=100, unique=True)
+
+
+class Airplane (models.Model):
     produced = models.DateField()
+    registration = models.CharField(max_length=10)
+    airplane_model = models.ForeignKey(AirplaneModel, on_delete=models.CASCADE)
 
 
 class Airline (models.Model):

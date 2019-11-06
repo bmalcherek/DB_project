@@ -14,6 +14,12 @@ class AirportSerializer (serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AirplaneModelSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = models.AirplaneModel
+        fields = '__all__'
+
+
 class AirplaneSerializer (serializers.ModelSerializer):
     class Meta:
         model = models.Airplane
