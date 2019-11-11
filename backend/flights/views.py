@@ -59,7 +59,7 @@ def country_detail(request, country_id):
 
 class AirportsList (generics.ListCreateAPIView):
     queryset = Airport.objects.all()
-    serializer_class = AirlineSerializer
+    serializer_class = AirportSerializer
 
 
 class AirplaneModelsList (generics.ListCreateAPIView):
