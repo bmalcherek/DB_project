@@ -8,6 +8,7 @@ const BaseRouter = () => (
   <div id="router">
     <Switch>
       <Route exact path="/" component={CountriesList} />
+      <Route exact path="/countries" component={CountriesList} />
       <Route exact path="/add-country" component={CountryForm} />
       <Route
         exact
