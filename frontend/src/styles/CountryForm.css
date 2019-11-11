@@ -1,0 +1,16 @@
+#country-form-container {
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* #form-input { */
+/* margin: 5px; */
+/* display: block; */
+/* } */
+
+#continent-select {
+  width: 191px;
+}
