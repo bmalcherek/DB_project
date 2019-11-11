@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { List, ListItemText, ListItem, Button } from "@material-ui/core";
+import {
+  List,
+  ListItemText,
+  ListItem,
+  Button,
+  ListItemSecondaryAction,
+  IconButton
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { Edit } from "@material-ui/icons";
 
 import { fetchData } from "../helpers";
 
@@ -20,6 +28,13 @@ const CountriesList = () => {
         primary={country.name}
         secondary={`continent: ${country.continent}, currency: ${country.currency}, language: ${country.language}`}
       />
+      <ListItemSecondaryAction>
+        <Link to={`/countries/${country.id}/edit`}>
+          <IconButton edge="end">
+            <Edit />
+          </IconButton>
+        </Link>
+      </ListItemSecondaryAction>
     </ListItem>
   ));
 

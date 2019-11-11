@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FormControl,
   Select,
@@ -8,9 +8,9 @@ import {
   Button,
   makeStyles
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import { postData } from "../../helpers";
+import { postData, fetchData, putData } from "../../helpers";
 
 import "../../styles/CountryForm.css";
 
@@ -35,6 +35,7 @@ const CountryForm = props => {
 
   const classes = useStyles();
   let history = useHistory();
+  const { countryID } = useParams();
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -55,6 +56,18 @@ const CountryForm = props => {
     }
   };
 
+  useEffect(() => {
+    if (props.edit) {
+      const response = fetchData(`api/countries/${countryID}/`);
+      response.then(res => {
+        setName(res.data["name"]);
+        setContinent(res.data["continent"]);
+        setCurrency(res.data["currency"]);
+        setLanguage(res.data["language"]);
+      });
+    }
+  }, [countryID, props.edit]);
+
   const handleSubmit = () => {
     const data = {
       name,
@@ -62,7 +75,12 @@ const CountryForm = props => {
       language,
       currency
     };
-    const response = postData("api/countries/", data);
+    let response;
+    if (props.edit) {
+      response = putData(`api/countries/${countryID}/`, data);
+    } else {
+      response = postData("api/countries/", data);
+    }
     response.then(() => history.push("/"));
   };
 
