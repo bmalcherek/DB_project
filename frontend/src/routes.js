@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import CountriesList from "./components/CountriesList";
 import CountryForm from "./components/forms/CountryForm";
 import AirportsList from "./components/AirportsList";
+import AirplaneModelsList from "./components/AirplaneModelsList";
 
 const BaseRouter = () => (
   <div id="router">
@@ -17,6 +18,7 @@ const BaseRouter = () => (
         component={() => <CountryForm edit />}
       />
       <Route exact path="/airports" component={AirportsList} />
+      <Route exact path="/airplane-models" component={AirplaneModelsList} />
     </Switch>
   </div>
 );

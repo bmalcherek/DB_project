@@ -12,7 +12,7 @@ import {
   makeStyles,
   Divider
 } from "@material-ui/core";
-import { Menu, Public, FlightTakeoff } from "@material-ui/icons";
+import { Menu, Public, FlightTakeoff, Flight } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 import "../styles/Navbar.css";
@@ -66,6 +66,15 @@ const Navbar = () => {
               <FlightTakeoff />
             </ListItemIcon>
             <ListItemText primary="Airports" />
+          </ListItem>
+        </Link>
+
+        <Link to="/airplane-models" className="link">
+          <ListItem button>
+            <ListItemIcon>
+              <Flight />
+            </ListItemIcon>
+            <ListItemText primary="Airplane Models" />
           </ListItem>
         </Link>
       </List>
