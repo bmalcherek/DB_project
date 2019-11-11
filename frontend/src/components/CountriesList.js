@@ -8,19 +8,30 @@ import {
   IconButton
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Edit } from "@material-ui/icons";
+import { Edit, Delete } from "@material-ui/icons";
 
-import { fetchData } from "../helpers";
+import { fetchData, deleteItem } from "../helpers";
 
 import "../styles/CountriesList.css";
 
+//FIXME: prevent double reloading after delete
+
 const CountriesList = () => {
   const [countries, setCountries] = useState([]);
+  const [edited, setEdited] = useState(false);
 
   useEffect(() => {
     const response = fetchData("api/countries/");
-    response.then(res => setCountries(res.data));
-  }, []);
+    response.then(res => {
+      setCountries(res.data);
+      setEdited(false);
+    });
+  }, [edited]);
+
+  const handleDelete = event => {
+    const response = deleteItem(`api/countries/${event.currentTarget.name}/`);
+    response.then(() => setEdited(true));
+  };
 
   const countriesListElements = countries.map(country => (
     <ListItem button key={country.id}>
@@ -34,6 +45,9 @@ const CountriesList = () => {
             <Edit />
           </IconButton>
         </Link>
+        <IconButton edge="end" onClick={handleDelete} name={country.id}>
+          <Delete name={country.id} />
+        </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
   ));
