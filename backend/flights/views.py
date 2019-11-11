@@ -27,51 +27,51 @@ from .models import (
 )
 
 
-class CountriesList (generics.ListAPIView):
+class CountriesList (generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
 
-class AirportsList (generics.ListAPIView):
+class AirportsList (generics.ListCreateAPIView):
     queryset = Airport.objects.all()
     serializer_class = AirlineSerializer
 
 
-class AirplaneModelsList (generics.ListAPIView):
+class AirplaneModelsList (generics.ListCreateAPIView):
     queryset = AirplaneModel.objects.all()
     serializer_class = AirplaneModelSerializer
 
 
-class AirplanesList (generics.ListAPIView):
+class AirplanesList (generics.ListCreateAPIView):
     queryset = Airplane.objects.all()
     serializer_class = AirplaneSerializer
 
 
-class AirlinesList (generics.ListAPIView):
+class AirlinesList (generics.ListCreateAPIView):
     queryset = Airline.objects.all()
     serializer_class = AirlineSerializer
 
 
-class CrewsList (generics.ListAPIView):
+class CrewsList (generics.ListCreateAPIView):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
 
 
-class CrewMembersList (generics.ListAPIView):
+class CrewMembersList (generics.ListCreateAPIView):
     queryset = CrewMember.objects.all()
     serializer_class = CrewMemberSerializer
 
 
-class FlightsList (generics.ListAPIView):
+class FlightsList (generics.ListCreateAPIView):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
 
 
-class ReservationsList (generics.ListAPIView):
+class ReservationsList (generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
 
-class LuggagesList (generics.ListAPIView):
+class LuggagesList (generics.ListCreateAPIView):
     queryset = Luggage.objects.all()
     serializer_class =  LuggageSerializer
