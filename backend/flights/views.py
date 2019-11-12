@@ -62,6 +62,30 @@ class AirportsList (generics.ListCreateAPIView):
     serializer_class = AirportSerializer
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def airport_detail(request, airport_id):
+    try:
+        airport = Airport.objects.get(id=airport_id)
+    except Airport.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = AirportSerializer(airport)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = AirportSerializer(airport, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        airport.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 class AirplaneModelsList (generics.ListCreateAPIView):
     queryset = AirplaneModel.objects.all()
     serializer_class = AirplaneModelSerializer

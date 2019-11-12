@@ -6,6 +6,7 @@ urlpatterns = [
     path('countries/', views.CountriesList.as_view()),
     path('countries/<int:country_id>/', views.country_detail),
     path('airports/', views.AirportsList.as_view()),
+    path('airports/<int:airport_id>/', views.airport_detail),
     path('airplane-models/', views.AirplaneModelsList.as_view()),
     path('airplanes/', views.AirplanesList.as_view()),
     path('airlines/', views.AirlinesList.as_view()),
