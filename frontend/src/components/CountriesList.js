@@ -55,7 +55,7 @@ const CountriesList = () => {
   return (
     <div>
       <div id="countries-utils">
-        <Link to="/add-country" className="link">
+        <Link to="/countries/add-country" className="link">
           <Button id="add-country-btn" variant="contained">
             Add Country
           </Button>
