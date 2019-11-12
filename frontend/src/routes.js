@@ -20,6 +20,11 @@ const BaseRouter = () => (
       />
       <Route exact path="/airports" component={AirportsList} />
       <Route exact path="/airports/add-airport" component={AirportForm} />
+      <Route
+        exact
+        path="/airports/:airportID/edit"
+        component={() => <AirportForm edit />}
+      />
       <Route exact path="/airplane-models" component={AirplaneModelsList} />
     </Switch>
   </div>

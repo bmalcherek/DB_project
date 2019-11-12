@@ -10,22 +10,25 @@ import {
 import { Edit, Delete } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-import { fetchData } from "../helpers";
+import { fetchData, deleteItem } from "../helpers";
 
 //TODO: implement edit
-//TODO: implement adding airports
 
 const AirportList = () => {
   const [airports, setAirtports] = useState([]);
+  const [edited, setEdited] = useState(false);
 
   useEffect(() => {
     const response = fetchData("api/airports/");
-    response.then(res => setAirtports(res.data));
-  }, []);
+    response.then(res => {
+      setAirtports(res.data);
+      setEdited(false);
+    });
+  }, [edited]);
 
-  const handleDelete = () => {
-    //TODO: implement delete
-    console.log("implement delete");
+  const handleDelete = event => {
+    const response = deleteItem(`api/airports/${event.currentTarget.name}/`);
+    response.then(() => setEdited(true));
   };
 
   const airportsListElements = airports.map(airport => (
@@ -35,9 +38,11 @@ const AirportList = () => {
         secondary={`IATA code: ${airport.IATA_code}, ICAO code: ${airport.ICAO_code}, countryID: ${airport.country}`}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end">
-          <Edit />
-        </IconButton>
+        <Link to={`/airports/${airport.id}/edit`}>
+          <IconButton edge="end">
+            <Edit />
+          </IconButton>
+        </Link>
         <IconButton edge="end" onClick={handleDelete} name={airport.id}>
           <Delete name={airport.id} />
         </IconButton>

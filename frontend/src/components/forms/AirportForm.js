@@ -9,9 +9,9 @@ import {
   makeStyles,
   FormHelperText
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
-import { fetchData, postData } from "../../helpers";
+import { fetchData, postData, putData } from "../../helpers";
 
 import "../../styles/Forms.css";
 
@@ -33,11 +33,22 @@ const AirportForm = props => {
 
   const classes = useStyles();
   let history = useHistory();
+  const { airportID } = useParams();
 
   useEffect(() => {
     const response = fetchData("api/countries");
     response.then(res => setCountries(res.data));
-  }, []);
+
+    if (props.edit) {
+      const response = fetchData(`api/airports/${airportID}/`);
+      response.then(res => {
+        setIataCode(res.data.IATA_code);
+        setIcaoCode(res.data.ICAO_code);
+        setName(res.data.name);
+        setCountry(res.data.country);
+      });
+    }
+  }, [airportID, props.edit]);
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -65,7 +76,12 @@ const AirportForm = props => {
       name,
       country
     };
-    const response = postData("api/airports/", data);
+    let response;
+    if (props.edit) {
+      response = putData(`api/airports/${airportID}/`, data);
+    } else {
+      response = postData("api/airports/", data);
+    }
     response.then(() => history.push("/airports"));
   };
 
