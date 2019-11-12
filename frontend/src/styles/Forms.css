@@ -1,4 +1,4 @@
-#country-form-container {
+#form-container {
   left: 50%;
   display: flex;
   align-items: center;
@@ -11,6 +11,7 @@
 /* display: block; */
 /* } */
 
-#continent-select {
+#continent-select,
+#country-select {
   width: 191px;
 }

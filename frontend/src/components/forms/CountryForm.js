@@ -12,7 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { postData, fetchData, putData } from "../../helpers";
 
-import "../../styles/CountryForm.css";
+import "../../styles/Forms.css";
 
 //TODO: validate all inputs not empty
 //TODO: validate currency on 3 characters
@@ -85,7 +85,7 @@ const CountryForm = props => {
   };
 
   return (
-    <div id="country-form-container">
+    <div id="form-container">
       <FormControl className={classes.formControl}>
         <TextField
           value={name}

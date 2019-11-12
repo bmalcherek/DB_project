@@ -4,9 +4,11 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  IconButton
+  IconButton,
+  Button
 } from "@material-ui/core";
 import { Edit, Delete } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 import { fetchData } from "../helpers";
 
@@ -44,8 +46,17 @@ const AirportList = () => {
   ));
 
   return (
-    <div id="airports-list-container">
-      <List id="airports-list">{airportsListElements}</List>
+    <div>
+      <div id="airport-utils">
+        <Link to="/airports/add-airport" className="link">
+          <Button id="add-airport-btn" variant="contained">
+            Add Airport
+          </Button>
+        </Link>
+      </div>
+      <div id="airports-list-container">
+        <List id="airports-list">{airportsListElements}</List>
+      </div>
     </div>
   );
 };
