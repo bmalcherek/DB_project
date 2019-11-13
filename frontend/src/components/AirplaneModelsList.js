@@ -13,7 +13,7 @@ import { Edit, Delete } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 import { fetchData, deleteItem } from "../helpers";
-import TableHeader from "./table/TableHeader";
+import TableToolbar from "./table/TableToolbar";
 
 //TODO: implement edit
 //TODO: implement adding airplaneModels
@@ -133,11 +133,12 @@ const AirplaneModelsList = () => {
 	return (
 		<div id="airplane-models-table-container">
 			<Paper>
-				<TableHeader
+				<TableToolbar
 					tableTitle="Airplane Models"
 					addLink="/airplane-models/add-airplane-model"
 					filters={filters}
 				/>
+
 				<Table>
 					<TableHead>
 						<TableRow>
