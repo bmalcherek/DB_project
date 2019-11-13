@@ -91,6 +91,30 @@ class AirplaneModelsList (generics.ListCreateAPIView):
     serializer_class = AirplaneModelSerializer
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def airplane_model_detail(request, airplane_model_id):
+    try:
+        airplane_model = AirplaneModel.objects.get(id=airplane_model_id)
+    except AirplaneModel.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = AirplaneModelSerializer(airport)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = AirplaneModelSerializer(airport, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        airplane_model.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 class AirplanesList (generics.ListCreateAPIView):
     queryset = Airplane.objects.all()
     serializer_class = AirplaneSerializer
