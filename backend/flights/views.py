@@ -98,7 +98,7 @@ def airplane_model_detail(request, airplane_model_id):
     except AirplaneModel.DoesNotExist:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
-        serializer = AirplaneModelSerializer(airport)
+        serializer = AirplaneModelSerializer(airplane_model)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
