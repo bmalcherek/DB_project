@@ -8,7 +8,7 @@ urlpatterns = [
     path('airports/', views.AirportsList.as_view()),
     path('airports/<int:airport_id>/', views.airport_detail),
     path('airplane-models/', views.AirplaneModelsList.as_view()),
-    path('airplane-models/<int:airplane_model_id>', views.airplane_model_detail),
+    path('airplane-models/<int:airplane_model_id>/', views.airplane_model_detail),
     path('airplanes/', views.AirplanesList.as_view()),
     path('airlines/', views.AirlinesList.as_view()),
     path('crews/', views.CrewsList.as_view()),

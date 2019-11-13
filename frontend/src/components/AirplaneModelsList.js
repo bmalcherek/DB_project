@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core";
 import { Edit, Delete, FilterList } from "@material-ui/icons";
 
-import { fetchData } from "../helpers";
+import { fetchData, deleteItem } from "../helpers";
 
 //TODO: implement edit
 //TODO: implement adding airplaneModels
@@ -37,7 +37,8 @@ const AirplaneModelsList = () => {
 	const [nameFilter, setNameFilter] = useState("");
 	const [manufacturerFilter, setManufacturerFilter] = useState("");
 	const [symbolFilter, setSymbolFilter] = useState("");
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [edited, setEdited] = useState(false);
 
 	const classes = useStyles();
 
@@ -46,8 +47,9 @@ const AirplaneModelsList = () => {
 		response.then(res => {
 			setOgAirplaneModels(res.data);
 			setAirplaneModels(res.data);
+			setEdited(false);
 		});
-	}, []);
+	}, [edited]);
 
 	const handleChange = event => {
 		let filters = {
@@ -97,9 +99,11 @@ const AirplaneModelsList = () => {
 		setAnchorEl(null);
 	};
 
-	const handleDelete = () => {
-		//TODO: implement delete
-		console.log("implement delete");
+	const handleDelete = event => {
+		const response = deleteItem(
+			`api/airplane-models/${event.currentTarget.name}/`
+		);
+		response.then(() => setEdited(true));
 	};
 
 	const handleSort = key => () => {
