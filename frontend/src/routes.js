@@ -7,38 +7,40 @@ import AirportsList from "./components/AirportsList";
 import AirplaneModelsList from "./components/AirplaneModelsList";
 import AirportForm from "./components/forms/AirportForm";
 import AirplaneModelForm from "./components/forms/AirplaneModelForm";
+import TableTest from "./components/table/TableTest";
 
 const BaseRouter = () => (
-  <div id="router">
-    <Switch>
-      <Route exact path="/" component={CountriesList} />
-      <Route exact path="/countries" component={CountriesList} />
-      <Route exact path="/countries/add-country" component={CountryForm} />
-      <Route
-        exact
-        path="/countries/:countryID/edit"
-        component={() => <CountryForm edit />}
-      />
-      <Route exact path="/airports" component={AirportsList} />
-      <Route exact path="/airports/add-airport" component={AirportForm} />
-      <Route
-        exact
-        path="/airports/:airportID/edit"
-        component={() => <AirportForm edit />}
-      />
-      <Route exact path="/airplane-models" component={AirplaneModelsList} />
-      <Route
-        exact
-        path="/airplane-models/add-airplane-model"
-        component={AirplaneModelForm}
-      />
-      <Route
-        exact
-        path="/airplane-models/:airplaneModelID/edit"
-        component={() => <AirplaneModelForm edit />}
-      />
-    </Switch>
-  </div>
+	<div id="router">
+		<Switch>
+			<Route exact path="/" component={CountriesList} />
+			<Route exact path="/test" component={TableTest} />
+			<Route exact path="/countries" component={CountriesList} />
+			<Route exact path="/countries/add-country" component={CountryForm} />
+			<Route
+				exact
+				path="/countries/:countryID/edit"
+				component={() => <CountryForm edit />}
+			/>
+			<Route exact path="/airports" component={AirportsList} />
+			<Route exact path="/airports/add-airport" component={AirportForm} />
+			<Route
+				exact
+				path="/airports/:airportID/edit"
+				component={() => <AirportForm edit />}
+			/>
+			<Route exact path="/airplane-models" component={AirplaneModelsList} />
+			<Route
+				exact
+				path="/airplane-models/add-airplane-model"
+				component={AirplaneModelForm}
+			/>
+			<Route
+				exact
+				path="/airplane-models/:airplaneModelID/edit"
+				component={() => <AirplaneModelForm edit />}
+			/>
+		</Switch>
+	</div>
 );
 
 export default BaseRouter;
