@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-	IconButton,
 	Table,
 	TableBody,
 	TableCell,
 	TableRow,
 	Paper
 } from "@material-ui/core";
-import { Edit, Delete } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
-import { fetchData, deleteItem } from "../helpers";
-import { TableToolbar, TableHeader } from "./table";
+import { fetchData } from "../helpers";
+import { TableToolbar, TableHeader, TableActions } from "./table";
 
 const AirplaneModelsList = () => {
 	const [airplaneModels, setAirplaneModels] = useState([]);
@@ -32,28 +29,17 @@ const AirplaneModelsList = () => {
 		});
 	}, [edited]);
 
-	const handleDelete = event => {
-		const response = deleteItem(
-			`api/airplane-models/${event.currentTarget.name}/`
-		);
-		response.then(() => setEdited(true));
-	};
-
 	const airplaneModelsTableRows = airplaneModels.map(airplaneModel => (
 		<TableRow key={airplaneModel.id}>
 			<TableCell>{airplaneModel.name}</TableCell>
 			<TableCell align="right">{airplaneModel.manufacturer}</TableCell>
 			<TableCell align="right">{airplaneModel.symbol}</TableCell>
-			<TableCell align="right">
-				<Link to={`/airplane-models/${airplaneModel.id}/edit`}>
-					<IconButton>
-						<Edit />
-					</IconButton>
-				</Link>
-				<IconButton onClick={handleDelete} name={airplaneModel.id}>
-					<Delete />
-				</IconButton>
-			</TableCell>
+			<TableActions
+				editLink={`/airplane-models/${airplaneModel.id}/edit`}
+				setEdited={setEdited}
+				url="api/airplane-models"
+				itemID={airplaneModel.id}
+			/>
 		</TableRow>
 	));
 
