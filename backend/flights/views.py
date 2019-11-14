@@ -102,7 +102,7 @@ def airplane_model_detail(request, airplane_model_id):
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = AirplaneModelSerializer(airport, data=request.data)
+        serializer = AirplaneModelSerializer(airplane_model, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
@@ -131,7 +131,7 @@ def airplane_detail(request, airplane_id):
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = AirplaneSerializer(airport, data=request.data)
+        serializer = AirplaneSerializer(airplane, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)

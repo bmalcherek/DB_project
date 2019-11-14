@@ -12,6 +12,7 @@
 /* } */
 
 #continent-select,
-#country-select {
+#country-select,
+#airplane-model-select {
   width: 191px;
 }
