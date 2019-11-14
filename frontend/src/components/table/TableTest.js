@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Table } from "@material-ui/core";
 import { FilterList } from "@material-ui/icons";
 
 import TableToolbar from "./TableToolbar";
+import TableHeader from "./TableHeader";
 
 const TableTest = () => {
 	const [test, setTest] = useState("");
@@ -16,12 +17,22 @@ const TableTest = () => {
 		}
 	];
 
+	const headers = [
+		{ align: "inherit", name: "Name" },
+		{ align: "right", name: "Right" }
+	];
+
 	return (
 		<div id="table-test-container">
 			<TableToolbar filters={filters} tableTitle="Test" addLink="/test/add" />
-			<IconButton onClick={() => console.log(test)} edge="end">
-				<FilterList />
-			</IconButton>
+			<Table>
+				<TableHeader
+					headers={headers}
+					orderBy="name"
+					changeSort={() => console.log("changeSort")}
+					order="desc"
+				/>
+			</Table>
 		</div>
 	);
 };
