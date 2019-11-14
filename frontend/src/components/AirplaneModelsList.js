@@ -85,24 +85,6 @@ const AirplaneModelsList = () => {
 	useEffect(() => {
 		if (airplaneModels.length > 0) {
 			setAirplaneModels(listSort(airplaneModels, orderBy, order));
-			// const models = ogAirplaneModels;
-			// setAirplaneModels(
-			// 	models.sort((model1, model2) => {
-			// 		if (order === "asc") {
-			// 			return model1[orderBy] > model2[orderBy]
-			// 				? 1
-			// 				: model1[orderBy] < model2[orderBy]
-			// 				? -1
-			// 				: 0;
-			// 		} else {
-			// 			return model1[orderBy] > model2[orderBy]
-			// 				? -1
-			// 				: model1[orderBy] < model2[orderBy]
-			// 				? 1
-			// 				: 0;
-			// 		}
-			// 	})
-			// );
 		}
 	}, [order, orderBy, airplaneModels]);
 

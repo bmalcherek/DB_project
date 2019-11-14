@@ -10,6 +10,7 @@ urlpatterns = [
     path('airplane-models/', views.AirplaneModelsList.as_view()),
     path('airplane-models/<int:airplane_model_id>/', views.airplane_model_detail),
     path('airplanes/', views.AirplanesList.as_view()),
+    path('airplanes/<int:airplane_id>/', views.airplane_detail),
     path('airlines/', views.AirlinesList.as_view()),
     path('crews/', views.CrewsList.as_view()),
     path('crew-members/', views.CrewMembersList.as_view()),
