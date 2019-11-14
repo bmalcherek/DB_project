@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, TableRow, TableCell, TableBody } from "@material-ui/core";
 
-import { fetchData } from "../helpers";
+import { fetchData, listSort } from "../helpers";
 import { TableToolbar, TableHeader, TableActions } from "./table";
 
 const AirplanesList = () => {
@@ -32,27 +32,10 @@ const AirplanesList = () => {
 	}, [registrationFilter, ogAirplanes]);
 
 	useEffect(() => {
-		if (ogAirplanes.length > 0) {
-			const planes = ogAirplanes;
-			setAirplanes(
-				planes.sort((plane1, plane2) => {
-					if (order === "asc") {
-						return plane1[orderBy] > plane2[orderBy]
-							? 1
-							: plane1[orderBy] < plane2[orderBy]
-							? -1
-							: 0;
-					} else {
-						return plane1[orderBy] > plane2[orderBy]
-							? -1
-							: plane1[orderBy] < plane2[orderBy]
-							? 1
-							: 0;
-					}
-				})
-			);
+		if (airplanes.length > 0) {
+			setAirplanes(listSort(airplanes, orderBy, order));
 		}
-	}, [order, orderBy, ogAirplanes]);
+	}, [order, orderBy, airplanes]);
 
 	const airplanesTableRows = airplanes.map(airplane => (
 		<TableRow key={airplane.id}>

@@ -7,7 +7,7 @@ import {
 	Paper
 } from "@material-ui/core";
 
-import { fetchData } from "../helpers";
+import { fetchData, listSort } from "../helpers";
 import { TableToolbar, TableHeader, TableActions } from "./table";
 
 const AirplaneModelsList = () => {
@@ -42,8 +42,6 @@ const AirplaneModelsList = () => {
 			/>
 		</TableRow>
 	));
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	const filters = [
 		{ label: "Name", name: "name", value: nameFilter, onChange: setNameFilter },
@@ -85,27 +83,28 @@ const AirplaneModelsList = () => {
 	}, [nameFilter, manufacturerFilter, symbolFilter, ogAirplaneModels]);
 
 	useEffect(() => {
-		if (ogAirplaneModels.length > 0) {
-			const models = ogAirplaneModels;
-			setAirplaneModels(
-				models.sort((model1, model2) => {
-					if (order === "asc") {
-						return model1[orderBy] > model2[orderBy]
-							? 1
-							: model1[orderBy] < model2[orderBy]
-							? -1
-							: 0;
-					} else {
-						return model1[orderBy] > model2[orderBy]
-							? -1
-							: model1[orderBy] < model2[orderBy]
-							? 1
-							: 0;
-					}
-				})
-			);
+		if (airplaneModels.length > 0) {
+			setAirplaneModels(listSort(airplaneModels, orderBy, order));
+			// const models = ogAirplaneModels;
+			// setAirplaneModels(
+			// 	models.sort((model1, model2) => {
+			// 		if (order === "asc") {
+			// 			return model1[orderBy] > model2[orderBy]
+			// 				? 1
+			// 				: model1[orderBy] < model2[orderBy]
+			// 				? -1
+			// 				: 0;
+			// 		} else {
+			// 			return model1[orderBy] > model2[orderBy]
+			// 				? -1
+			// 				: model1[orderBy] < model2[orderBy]
+			// 				? 1
+			// 				: 0;
+			// 		}
+			// 	})
+			// );
 		}
-	}, [order, orderBy, ogAirplaneModels]);
+	}, [order, orderBy, airplaneModels]);
 
 	const handleOrder = name => {
 		if (orderBy === name) {
