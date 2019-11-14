@@ -7,14 +7,12 @@ import AirportsList from "./components/AirportsList";
 import AirplaneModelsList from "./components/AirplaneModelsList";
 import AirportForm from "./components/forms/AirportForm";
 import AirplaneModelForm from "./components/forms/AirplaneModelForm";
-import TableTest from "./components/table/TableTest";
 import AirplanesList from "./components/AirplanesList";
 
 const BaseRouter = () => (
 	<div id="router">
 		<Switch>
 			<Route exact path="/" component={CountriesList} />
-			<Route exact path="/test" component={TableTest} />
 			<Route exact path="/countries" component={CountriesList} />
 			<Route exact path="/countries/add-country" component={CountryForm} />
 			<Route
