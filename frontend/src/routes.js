@@ -9,6 +9,7 @@ import AirportForm from "./components/forms/AirportForm";
 import AirplaneModelForm from "./components/forms/AirplaneModelForm";
 import AirplanesList from "./components/AirplanesList";
 import AirplaneForm from "./components/forms/AirplaneForm";
+import AirlinesList from "./components/AirlinesList";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -46,6 +47,7 @@ const BaseRouter = () => (
 				path="/airplanes/:airplaneID/edit"
 				component={() => <AirplaneForm edit />}
 			/>
+			<Route exact path="/airlines" component={AirlinesList} />
 		</Switch>
 	</div>
 );
