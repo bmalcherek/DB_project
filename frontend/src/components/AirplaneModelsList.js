@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-	IconButton,
 	Table,
 	TableBody,
 	TableCell,
-	TableHead,
 	TableRow,
-	TableSortLabel,
 	Paper
 } from "@material-ui/core";
-import { Edit, Delete } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
-import { fetchData, deleteItem } from "../helpers";
-import TableToolbar from "./table/TableToolbar";
-
-//TODO: implement edit
-//TODO: implement adding airplaneModels
+import { fetchData, listSort } from "../helpers";
+import { TableToolbar, TableHeader, TableActions } from "./table";
 
 const AirplaneModelsList = () => {
 	const [airplaneModels, setAirplaneModels] = useState([]);
@@ -37,65 +29,19 @@ const AirplaneModelsList = () => {
 		});
 	}, [edited]);
 
-	const handleDelete = event => {
-		const response = deleteItem(
-			`api/airplane-models/${event.currentTarget.name}/`
-		);
-		response.then(() => setEdited(true));
-	};
-
-	const handleSort = key => () => {
-		let ord;
-		if (orderBy === key) {
-			ord = order === "desc" ? "asc" : "desc";
-			setOrder(ord);
-		} else {
-			ord = "desc";
-			setOrderBy(key);
-			setOrder("desc");
-		}
-		sort(airplaneModels, key, ord);
-	};
-
-	const sort = (models, by, ord) => {
-		setAirplaneModels(
-			models.sort((element1, element2) => {
-				if (ord === "asc") {
-					return element1[by] > element2[by]
-						? 1
-						: element1[by] < element2[by]
-						? -1
-						: 0;
-				} else {
-					return element1[by] > element2[by]
-						? -1
-						: element1[by] < element2[by]
-						? 1
-						: 0;
-				}
-			})
-		);
-	};
-
 	const airplaneModelsTableRows = airplaneModels.map(airplaneModel => (
 		<TableRow key={airplaneModel.id}>
 			<TableCell>{airplaneModel.name}</TableCell>
 			<TableCell align="right">{airplaneModel.manufacturer}</TableCell>
 			<TableCell align="right">{airplaneModel.symbol}</TableCell>
-			<TableCell align="right">
-				<Link to={`/airplane-models/${airplaneModel.id}/edit`}>
-					<IconButton>
-						<Edit />
-					</IconButton>
-				</Link>
-				<IconButton onClick={handleDelete} name={airplaneModel.id}>
-					<Delete />
-				</IconButton>
-			</TableCell>
+			<TableActions
+				editLink={`/airplane-models/${airplaneModel.id}/edit`}
+				setEdited={setEdited}
+				url="api/airplane-models"
+				itemID={airplaneModel.id}
+			/>
 		</TableRow>
 	));
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	const filters = [
 		{ label: "Name", name: "name", value: nameFilter, onChange: setNameFilter },
@@ -111,6 +57,12 @@ const AirplaneModelsList = () => {
 			value: symbolFilter,
 			onChange: setSymbolFilter
 		}
+	];
+
+	const headers = [
+		{ align: "inherit", name: "Name" },
+		{ align: "right", name: "Manufacturer" },
+		{ align: "right", name: "Symbol" }
 	];
 
 	useEffect(() => {
@@ -130,6 +82,21 @@ const AirplaneModelsList = () => {
 		}
 	}, [nameFilter, manufacturerFilter, symbolFilter, ogAirplaneModels]);
 
+	useEffect(() => {
+		if (airplaneModels.length > 0) {
+			setAirplaneModels(listSort(airplaneModels, orderBy, order));
+		}
+	}, [order, orderBy, airplaneModels]);
+
+	const handleOrder = name => {
+		if (orderBy === name) {
+			setOrder(order === "desc" ? "asc" : "desc");
+		} else {
+			setOrder("desc");
+			setOrderBy(name);
+		}
+	};
+
 	return (
 		<div id="airplane-models-table-container">
 			<Paper>
@@ -140,42 +107,13 @@ const AirplaneModelsList = () => {
 				/>
 
 				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell key="name">
-								<TableSortLabel
-									active={orderBy === "name"}
-									onClick={handleSort("name")}
-									direction={order}
-								>
-									<b>Name</b>
-								</TableSortLabel>
-							</TableCell>
-							<TableCell align="right" key="manufacturer">
-								<TableSortLabel
-									active={orderBy === "manufacturer"}
-									align="right"
-									onClick={handleSort("manufacturer")}
-									direction={order}
-								>
-									<b>Manufacturer</b>
-								</TableSortLabel>
-							</TableCell>
-							<TableCell align="right" key="symbol">
-								<TableSortLabel
-									active={orderBy === "symbol"}
-									align="right"
-									onClick={handleSort("symbol")}
-									direction={order}
-								>
-									<b>Symbol</b>
-								</TableSortLabel>
-							</TableCell>
-							<TableCell align="right">
-								<b>Actions</b>
-							</TableCell>
-						</TableRow>
-					</TableHead>
+					<TableHeader
+						headers={headers}
+						orderBy={orderBy}
+						handleOrder={handleOrder}
+						order={order}
+					/>
+
 					<TableBody>{airplaneModelsTableRows}</TableBody>
 				</Table>
 			</Paper>

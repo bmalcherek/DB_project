@@ -7,13 +7,14 @@ import AirportsList from "./components/AirportsList";
 import AirplaneModelsList from "./components/AirplaneModelsList";
 import AirportForm from "./components/forms/AirportForm";
 import AirplaneModelForm from "./components/forms/AirplaneModelForm";
-import TableTest from "./components/table/TableTest";
+import AirplanesList from "./components/AirplanesList";
+import AirplaneForm from "./components/forms/AirplaneForm";
+import AirlinesList from "./components/AirlinesList";
 
 const BaseRouter = () => (
 	<div id="router">
 		<Switch>
 			<Route exact path="/" component={CountriesList} />
-			<Route exact path="/test" component={TableTest} />
 			<Route exact path="/countries" component={CountriesList} />
 			<Route exact path="/countries/add-country" component={CountryForm} />
 			<Route
@@ -39,6 +40,14 @@ const BaseRouter = () => (
 				path="/airplane-models/:airplaneModelID/edit"
 				component={() => <AirplaneModelForm edit />}
 			/>
+			<Route exact path="/airplanes" component={AirplanesList} />
+			<Route exact path="/airplanes/add-airplane" component={AirplaneForm} />
+			<Route
+				exact
+				path="/airplanes/:airplaneID/edit"
+				component={() => <AirplaneForm edit />}
+			/>
+			<Route exact path="/airlines" component={AirlinesList} />
 		</Switch>
 	</div>
 );
