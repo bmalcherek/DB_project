@@ -1,5 +1,5 @@
 import json
-from models import Country
+from .models import Country
 
 with open('countries.json', 'r') as f:
     data = json.load(f)

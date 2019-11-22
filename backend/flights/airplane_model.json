@@ -4,13 +4,13 @@
   {"name": "Airbus A318","manufacturer": "Airbus"},
   {"name": "Airbus A319","manufacturer": "Airbus"},
   {"name": "Airbus A320","manufacturer": "Airbus"},
-  {"name": "Airbus A300","manufacturer": "Boeing"},
-  {"name": "Airbus A321","manufacturer": "Boeing"},
+  {"name": "Airbus A300","manufacturer": "Airbus"},
+  {"name": "Airbus A321","manufacturer": "Airbus"},
   {"name": "Fokker 100","manufacturer": "Fokker"},
-  {"name": "Airbus A350","manufacturer": "Boeing"},
-  {"name": "Airbus A321","manufacturer": "Boeing"},
+  {"name": "Airbus A350","manufacturer": "Airbus"},
+  {"name": "Airbus A321","manufacturer": "Airbus"},
   {"name": "Lockheed L-1011","manufacturer": "Lockheed Corp"},
-  {"name": "Embraer 170","manufacturer": "Embraer"},
+  {"name": "Embraer 170","manufacturer": "AIrbu"},
   {"name": "Embraer 190","manufacturer": "Embraer"},
   {"name": "Tu-154","manufacturer": "Aviakor"}
 ]
