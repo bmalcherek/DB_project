@@ -7,8 +7,10 @@ import {
 	makeStyles,
 	CircularProgress
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import { postData } from "../../helpers";
+import { useAuthValue } from "../../context";
 
 import "../../styles/LoginForm.css";
 
@@ -22,25 +24,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginForm = () => {
-	const [username, setUsername] = useState("");
+	const { setAuth, setUsername } = useAuthValue();
+
+	const [usernameField, setUsernameField] = useState("");
 	const [password, setPassword] = useState("");
 	const [loggingIn, setLoggingIn] = useState(false);
 
 	const classes = useStyles();
+	const history = useHistory();
 
 	const handleLogin = () => {
 		setLoggingIn(true);
-		const data = { username, password };
+		const data = { username: usernameField, password };
+
 		const response = postData("rest-auth/login/", data);
 		response.then(res => {
 			console.log(res.data);
+			localStorage.setItem("token", res.data.key);
+			setAuth(true);
+			setUsername(usernameField);
 			setLoggingIn(false);
+			history.push("/countries");
 		});
+
 		response.catch(err => {
 			console.log(err);
 			setLoggingIn(false);
 		});
-		// console.log(data);
 	};
 
 	let loginButton;
@@ -66,8 +76,8 @@ const LoginForm = () => {
 				<TextField
 					variant="outlined"
 					label="Username"
-					value={username}
-					onChange={event => setUsername(event.target.value)}
+					value={usernameField}
+					onChange={event => setUsernameField(event.target.value)}
 				/>
 			</FormControl>
 
