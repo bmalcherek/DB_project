@@ -10,11 +10,12 @@ import AirplaneModelForm from "./components/forms/AirplaneModelForm";
 import AirplanesList from "./components/AirplanesList";
 import AirplaneForm from "./components/forms/AirplaneForm";
 import AirlinesList from "./components/AirlinesList";
+import LoginForm from "./components/forms/LoginForm";
 
 const BaseRouter = () => (
 	<div id="router">
 		<Switch>
-			<Route exact path="/" component={CountriesList} />
+			<Route exact path="/" component={LoginForm} />
 			<Route exact path="/countries" component={CountriesList} />
 			<Route exact path="/countries/add-country" component={CountryForm} />
 			<Route
