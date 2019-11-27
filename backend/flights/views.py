@@ -30,6 +30,17 @@ from .models import (
 )
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_username(request):
+    username = ''
+    try:
+        username = request.user.username
+    except:
+        username = "Error in getting username"
+    return JsonResponse({'username': username}, status=status.HTTP_200_OK)
+
+
 class CountriesList (generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
@@ -39,6 +50,7 @@ class CountriesList (generics.ListCreateAPIView):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def country_detail(request, country_id):
+    print(request.user)
     try:
         country = Country.objects.get(id=country_id)
     except Country.DoesNotExist:

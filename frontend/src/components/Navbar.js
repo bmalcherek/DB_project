@@ -21,9 +21,17 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
+import UserInfo from "./UserInfo";
+
 import "../styles/Navbar.css";
 
 const useStyles = makeStyles({
+	root: {
+		flexGrow: 1
+	},
+	title: {
+		flexGrow: 1
+	},
 	list: {
 		width: 250
 	}
@@ -106,7 +114,7 @@ const Navbar = () => {
 	);
 
 	return (
-		<div id="navbar">
+		<div id="navbar" className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
@@ -117,7 +125,10 @@ const Navbar = () => {
 					>
 						<Menu />
 					</IconButton>
-					<Typography variant="h6">Navbar</Typography>
+					<Typography className={classes.title} variant="h6">
+						Navbar
+					</Typography>
+					<UserInfo />
 				</Toolbar>
 			</AppBar>
 			<Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
