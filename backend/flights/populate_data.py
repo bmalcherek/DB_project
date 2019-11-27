@@ -3,21 +3,19 @@ import sys
 import json
 from datetime import timedelta
 
-sys.path.append('/home/krystian/Pulpit/Projekt IO/DB_project')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.db_project.settings')
-from backend.db_project import settings
+# from db_project import settings
 
-# setup_environ(settings)
 from .models import *
-#import  ipdb; ipdb.set_trace()
 
 import random
 from faker import Faker
 from django.db import models
 
 fakegen = Faker()
+
 def create_all_countries():
-    with open('/home/krystian/Pulpit/Projekt IO/DB_project/backend/flights/countries.json', 'r') as f:
+    with open('flights/countries.json', 'r') as f:
         data = json.load(f)
         for country in data:
             try:
@@ -32,7 +30,7 @@ def create_all_countries():
 
 
 def create_airports():
-    with open("/home/krystian/Pulpit/Projekt IO/DB_project/backend/flights/airports.json") as f:
+    with open("flights/airports.json") as f:
         data = json.load(f)
         for airport in data:
             iata_code = airport['code']
@@ -54,8 +52,9 @@ def create_airports():
                 except:
                     print("Error with record " + name_air)
 
+
 def create_airlines():
-    with open("/home/krystian/Pulpit/Projekt IO/DB_project/backend/flights/airlines.json") as f:
+    with open("flights/airlines.json") as f:
         data = json.load(f)
         for airline in data:
             iata_code = airline['iata']
@@ -100,12 +99,9 @@ def fill_crews():
             )
 
 
-
-
-
 def create_airplane_models():
     fake_gen = Faker()
-    with open("/home/krystian/Pulpit/Projekt IO/DB_project/backend/flights/airplane_model.json") as f:
+    with open("flights/airplane_model.json") as f:
         data = json.load(f)
         for a in data:
             name = a['name']
@@ -117,7 +113,9 @@ def create_airplane_models():
                 symbol = symbol
 
             )
-def create_ariplanes(N):
+
+
+def create_airplanes(N):
     all_models = AirplaneModel.objects.all()
     fake_gen = Faker()
     for i in all_models:
@@ -129,6 +127,7 @@ def create_ariplanes(N):
                 registration = registration,
                 airplane_model = i
             )
+
 
 def generate_flight():
     fake_gen = Faker()
@@ -152,3 +151,14 @@ def generate_flight():
         arrival_date = arrival_date,
         airplane = airplane
     )
+
+
+def populate_database():
+    create_all_countries()
+    create_airports()
+    create_airlines()
+    create_crew(1000)
+    fill_crews()
+    create_airplane_models()
+    create_airplanes(500)
+    generate_flight()
