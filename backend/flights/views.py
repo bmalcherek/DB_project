@@ -1,5 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from django.http import JsonResponse, HttpResponse
 
 from .serializers import (
@@ -31,9 +33,11 @@ from .models import (
 class CountriesList (generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
+    permission_classes = [IsAuthenticated]
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def country_detail(request, country_id):
     try:
         country = Country.objects.get(id=country_id)
@@ -60,9 +64,11 @@ def country_detail(request, country_id):
 class AirportsList (generics.ListCreateAPIView):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
+    permission_classes = [IsAuthenticated]
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def airport_detail(request, airport_id):
     try:
         airport = Airport.objects.get(id=airport_id)
@@ -89,9 +95,11 @@ def airport_detail(request, airport_id):
 class AirplaneModelsList (generics.ListCreateAPIView):
     queryset = AirplaneModel.objects.all()
     serializer_class = AirplaneModelSerializer
+    permission_classes = [IsAuthenticated]
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def airplane_model_detail(request, airplane_model_id):
     try:
         airplane_model = AirplaneModel.objects.get(id=airplane_model_id)
@@ -118,9 +126,11 @@ def airplane_model_detail(request, airplane_model_id):
 class AirplanesList (generics.ListCreateAPIView):
     queryset = Airplane.objects.all()
     serializer_class = AirplaneSerializer
+    permission_classes = [IsAuthenticated]
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def airplane_detail(request, airplane_id):
     try:
         airplane = Airplane.objects.get(id=airplane_id)
@@ -147,28 +157,34 @@ def airplane_detail(request, airplane_id):
 class AirlinesList (generics.ListCreateAPIView):
     queryset = Airline.objects.all()
     serializer_class = AirlineSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class CrewsList (generics.ListCreateAPIView):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class CrewMembersList (generics.ListCreateAPIView):
     queryset = CrewMember.objects.all()
     serializer_class = CrewMemberSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class FlightsList (generics.ListCreateAPIView):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ReservationsList (generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class LuggagesList (generics.ListCreateAPIView):
     queryset = Luggage.objects.all()
     serializer_class = LuggageSerializer
+    permission_classes = [IsAuthenticated]

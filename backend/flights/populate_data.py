@@ -4,7 +4,6 @@ import json
 from datetime import timedelta
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.db_project.settings')
-# from db_project import settings
 
 from .models import *
 
