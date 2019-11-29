@@ -21,6 +21,7 @@ const UserInfo = () => {
 	const handleLogout = () => {
 		setAuth(false);
 		setUsername("");
+		localStorage.removeItem("token");
 	};
 
 	let userInfo;

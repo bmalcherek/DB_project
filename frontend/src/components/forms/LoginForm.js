@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	FormControl,
 	TextField,
@@ -7,7 +7,7 @@ import {
 	makeStyles,
 	CircularProgress
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { postData } from "../../helpers";
 import { useAuthValue } from "../../context";
@@ -32,6 +32,10 @@ const LoginForm = () => {
 
 	const classes = useStyles();
 	const history = useHistory();
+
+	useEffect(() => {
+		document.title = "Login";
+	}, []);
 
 	const handleLogin = () => {
 		setLoggingIn(true);
@@ -90,6 +94,14 @@ const LoginForm = () => {
 					onChange={event => setPassword(event.target.value)}
 				/>
 			</FormControl>
+
+			<Link
+				className="link"
+				to="/registration"
+				style={{ color: "gray", marginBottom: 10 }}
+			>
+				Don't have an account? Click Here
+			</Link>
 
 			{loginButton}
 		</div>
