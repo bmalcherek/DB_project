@@ -150,5 +150,6 @@ def generate_flight():
         airline = airline,
         departure_date = departure_date,
         arrival_date = arrival_date,
-        airplane = airplane
+        airplane = airplane,
+        num_places = random.randint(100,200)
     )
