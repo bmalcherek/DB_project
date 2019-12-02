@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics, status
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponse
 
 from .serializers import (
@@ -13,7 +14,8 @@ from .serializers import (
     CrewMemberSerializer,
     FlightSerializer,
     ReservationSerializer,
-    LuggageSerializer
+    LuggageSerializer,
+    UserSerializer
 )
 from .models import (
     Country,
@@ -27,6 +29,32 @@ from .models import (
     Reservation,
     Luggage
 )
+
+
+@permission_classes([AllowAny])
+@api_view(['POST'])
+def create_user(request):
+    try:
+        if (request.data['password1'] != request.data['password2']):
+            return HttpResponse("Passwords don't match", status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return HttpResponse('Data not correct', status=status.HTTP_400_BAD_REQUEST)
+
+    data = {
+        'username': request.data['username'],
+        'email': request.data['email'],
+        'password': request.data['password1']
+    }
+
+    user_model = get_user_model()
+    serializer = UserSerializer(data=data)
+    if serializer.is_valid():
+        user_model.objects.create_user(
+            username=data['username'], email=data['email'], password=data['password'])
+        return HttpResponse('User created', status=status.HTTP_201_CREATED)
+    else:
+        print(serializer.errors)
+        return HttpResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
