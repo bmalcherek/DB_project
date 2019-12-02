@@ -10,8 +10,6 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
-import { postData } from "../../helpers";
-
 const useStyles = makeStyles(theme => ({
 	formControl: {
 		margin: theme.spacing(1)
