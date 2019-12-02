@@ -143,14 +143,15 @@ def generate_flight():
     arrival_date = departure_date + timedelta(days=1)
     airplane = Airplane.objects.order_by('?').first()
     Flight.objects.get_or_create(
-        flight_number=number,
-        from_airport=from_airport,
-        to_airport=to_airport,
-        crew=crew,
-        airline=airline,
-        departure_date=departure_date,
-        arrival_date=arrival_date,
-        airplane=airplane
+        flight_number = number,
+        from_airport = from_airport,
+        to_airport = to_airport,
+        crew = crew,
+        airline = airline,
+        departure_date = departure_date,
+        arrival_date = arrival_date,
+        airplane = airplane,
+        num_places = random.randint(100,200)
     )
 
 
