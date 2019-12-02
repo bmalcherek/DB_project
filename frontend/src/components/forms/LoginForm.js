@@ -41,10 +41,17 @@ const LoginForm = () => {
 		setLoggingIn(true);
 		const data = { username: usernameField, password };
 
-		const response = postData("rest-auth/login/", data);
+		const response = postData("api/token/", data);
 		response.then(res => {
 			console.log(res.data);
-			localStorage.setItem("token", res.data.key);
+			localStorage.setItem("access", res.data.access);
+			localStorage.setItem("refresh", res.data.refresh);
+			const today = new Date();
+
+			localStorage.setItem(
+				"expirationDate",
+				today.setDate(today.getDate() + 28)
+			);
 			setAuth(true);
 			setUsername(usernameField);
 			setLoggingIn(false);
