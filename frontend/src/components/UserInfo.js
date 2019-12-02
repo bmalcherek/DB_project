@@ -21,7 +21,9 @@ const UserInfo = () => {
 	const handleLogout = () => {
 		setAuth(false);
 		setUsername("");
-		localStorage.removeItem("token");
+		localStorage.removeItem("access");
+		localStorage.removeItem("refresh");
+		localStorage.removeItem("expirationDate");
 	};
 
 	let userInfo;

@@ -17,5 +17,6 @@ urlpatterns = [
     path('flights/', views.FlightsList.as_view()),
     path('reservations/', views.ReservationsList.as_view()),
     path('luggages/', views.LuggagesList.as_view()),
-    path('username/', views.get_username)
+    path('username/', views.get_username),
+    path('users/register/', views.create_user)
 ]

@@ -8,6 +8,7 @@ import {
 	CircularProgress
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 import { postData } from "../../helpers";
 
@@ -42,7 +43,11 @@ const RegistrationForm = () => {
 			password1,
 			password2
 		};
-		const response = postData("rest-auth/registration/", data);
+		const response = axios.post(
+			`${process.env.REACT_APP_API_URL}api/users/register/`,
+			data
+		);
+
 		response.then(() => {
 			history.push("/login");
 		});
