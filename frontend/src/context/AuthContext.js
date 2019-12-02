@@ -23,6 +23,13 @@ export const AuthProvider = ({ children }) => {
 				)
 				.then(res => {
 					localStorage.setItem("access", res.data.access);
+					localStorage.setItem("refresh", res.data.refresh);
+					const today = new Date();
+
+					localStorage.setItem(
+						"expirationDate",
+						today.setDate(today.getDate() + 28)
+					);
 				});
 			return true;
 		} else {
