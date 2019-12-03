@@ -198,6 +198,31 @@ class AirlinesList (generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def airline_detail(request, airline_id):
+    try:
+        airline = Airline.objects.get(id=airline_id)
+    except Airline.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = AirlineSerializer(airline)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = AirlineSerializer(airline, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        airline.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 class CrewsList (generics.ListCreateAPIView):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer

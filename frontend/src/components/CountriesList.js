@@ -69,7 +69,7 @@ const Countrieslist = () => {
 			<TableCell align="right">{country.currency}</TableCell>
 			<TableCell align="right">{country.language}</TableCell>
 			<TableActions
-				editLink={`/countires/${country.id}/edit`}
+				editLink={`/countries/${country.id}/edit`}
 				setEdited={setEdited}
 				url="api/countires"
 				itemID={country.id}
