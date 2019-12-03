@@ -72,14 +72,11 @@ class Reservation(models.Model):
 
 def create_reservation(sender, **kwargs):
     if kwargs['created']:
-        if kwargs['instance'].flight.num_places<kwargs['instance'].places or kwargs['instance'].places <=0:
+        if kwargs['instance'].flight.num_places < kwargs['instance'].places or kwargs['instance'].places <= 0:
             kwargs['instance'].delete()
         else:
             kwargs['instance'].flight.num_places -= kwargs['instance'].places
             kwargs['instance'].flight.save()
-
-
-
 
 
 post_save.connect(create_reservation, sender=Reservation)
