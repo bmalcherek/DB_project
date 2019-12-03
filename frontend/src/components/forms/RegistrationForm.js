@@ -31,6 +31,7 @@ const RegistrationForm = () => {
 
 	useEffect(() => {
 		document.title = "Register";
+		return () => (document.title = "FlightApp");
 	}, []);
 
 	const handleRegistration = () => {

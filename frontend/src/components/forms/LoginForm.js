@@ -35,6 +35,7 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		document.title = "Login";
+		return () => (document.title = "FlightApp");
 	}, []);
 
 	const handleLogin = () => {
