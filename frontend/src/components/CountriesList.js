@@ -1,71 +1,142 @@
 import React, { useState, useEffect } from "react";
 import {
-  List,
-  ListItemText,
-  ListItem,
-  Button,
-  ListItemSecondaryAction,
-  IconButton
+	Table,
+	TableBody,
+	TableCell,
+	TableRow,
+	Paper
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { Edit, Delete } from "@material-ui/icons";
 
-import { fetchData, deleteItem } from "../helpers";
+import { fetchData, listSort } from "../helpers";
+import { TableToolbar, TableHeader, TableActions } from "./table";
 
-import "../styles/CountriesList.css";
+const Countrieslist = () => {
+	const [countries, setCountries] = useState([]);
+	const [ogCountries, setOgCountries] = useState([]);
+	const [nameFilter, setNameFilter] = useState("");
+	const [continentFilter, setContinentFilter] = useState("");
+	const [currencyFilter, setCurrencyFilter] = useState("");
+	const [languageFilter, setLanguageFilter] = useState("");
+	const [orderBy, setOrderBy] = useState("name");
+	const [order, setOrder] = useState("desc");
+	const [edited, setEdited] = useState(false);
 
-//FIXME: prevent double reloading after delete
+	useEffect(() => {
+		const response = fetchData("api/countries/");
+		response.then(res => {
+			setCountries(res.data);
+			setOgCountries(res.data);
+			setEdited(false);
+		});
+	}, [edited]);
 
-const CountriesList = () => {
-  const [countries, setCountries] = useState([]);
-  const [edited, setEdited] = useState(false);
+	useEffect(() => {
+		if (ogCountries.length > 0) {
+			setCountries(
+				ogCountries
+					.filter(row => {
+						return row.name.toLowerCase().startsWith(nameFilter);
+					})
+					.filter(row => {
+						return row.continent.toLowerCase().startsWith(continentFilter);
+					})
+					.filter(row => {
+						return row.currency.toLowerCase().startsWith(currencyFilter);
+					})
+					.filter(row => {
+						return row.language.toLowerCase().startsWith(languageFilter);
+					})
+			);
+		}
+	}, [
+		nameFilter,
+		continentFilter,
+		currencyFilter,
+		languageFilter,
+		ogCountries
+	]);
 
-  useEffect(() => {
-    const response = fetchData("api/countries/");
-    response.then(res => {
-      setCountries(res.data);
-      setEdited(false);
-    });
-  }, [edited]);
+	useEffect(() => {
+		if (countries.length > 0) {
+			setCountries(listSort(countries, orderBy, order));
+		}
+	}, [order, orderBy, countries]);
 
-  const handleDelete = event => {
-    const response = deleteItem(`api/countries/${event.currentTarget.name}/`);
-    response.then(() => setEdited(true));
-  };
+	const countriesTableRows = countries.map(country => (
+		<TableRow key={country.id}>
+			<TableCell>{country.name}</TableCell>
+			<TableCell align="right">{country.continent}</TableCell>
+			<TableCell align="right">{country.currency}</TableCell>
+			<TableCell align="right">{country.language}</TableCell>
+			<TableActions
+				editLink={`/countires/${country.id}/edit`}
+				setEdited={setEdited}
+				url="api/countires"
+				itemID={country.id}
+			/>
+		</TableRow>
+	));
 
-  const countriesListElements = countries.map(country => (
-    <ListItem button key={country.id}>
-      <ListItemText
-        primary={country.name}
-        secondary={`continent: ${country.continent}, currency: ${country.currency}, language: ${country.language}`}
-      />
-      <ListItemSecondaryAction>
-        <Link to={`/countries/${country.id}/edit`}>
-          <IconButton edge="end">
-            <Edit />
-          </IconButton>
-        </Link>
-        <IconButton edge="end" onClick={handleDelete} name={country.id}>
-          <Delete name={country.id} />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-  ));
+	const filters = [
+		{ label: "Name", name: "name", value: nameFilter, onChange: setNameFilter },
+		{
+			label: "Continent",
+			name: "continent",
+			value: continentFilter,
+			onChange: setContinentFilter
+		},
+		{
+			label: "Currency",
+			name: "currency",
+			value: currencyFilter,
+			onChange: setCurrencyFilter
+		},
+		{
+			label: "Language",
+			name: "language",
+			value: languageFilter,
+			onChange: setLanguageFilter
+		}
+	];
 
-  return (
-    <div>
-      <div id="countries-utils">
-        <Link to="/countries/add-country" className="link">
-          <Button id="add-country-btn" variant="contained">
-            Add Country
-          </Button>
-        </Link>
-      </div>
-      <div id="countries-list-container">
-        <List id="countries-list">{countriesListElements}</List>
-      </div>
-    </div>
-  );
+	const headers = [
+		{ align: "inherit", name: "Name" },
+		{ align: "right", name: "Continent" },
+		{ align: "right", name: "Currency" },
+		{ align: "right", name: "Language" }
+	];
+
+	const handleOrder = name => {
+		if (orderBy === name) {
+			setOrder(order === "desc" ? "asc" : "desc");
+		} else {
+			setOrder("desc");
+			setOrderBy(name);
+		}
+	};
+
+	return (
+		<div id="countires-list-table-container">
+			<Paper>
+				<TableToolbar
+					tableTitle="Countries"
+					addLink="/countries/add-country"
+					filters={filters}
+				/>
+
+				<Table>
+					<TableHeader
+						headers={headers}
+						orderBy={orderBy}
+						handleOrder={handleOrder}
+						order={order}
+					/>
+
+					<TableBody>{countriesTableRows}</TableBody>
+				</Table>
+			</Paper>
+		</div>
+	);
 };
 
-export default CountriesList;
+export default Countrieslist;
