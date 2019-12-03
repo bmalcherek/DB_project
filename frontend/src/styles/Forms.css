@@ -13,6 +13,7 @@
 
 #continent-select,
 #country-select,
-#airplane-model-select {
-  width: 191px;
+#airplane-model-select,
+#airport-select {
+  width: 200px;
 }

@@ -14,6 +14,7 @@ import AirplaneForm from "./components/forms/AirplaneForm";
 import AirlinesList from "./components/AirlinesList";
 import LoginForm from "./components/forms/LoginForm";
 import RegistrationForm from "./components/forms/RegistrationForm";
+import AirlineForm from "./components/forms/AirlineForm";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -21,7 +22,6 @@ const BaseRouter = () => (
 			<Route exact path="/" component={LoginForm} />
 			<Route exact path="/registration" component={RegistrationForm} />
 			<Route exact path="/login" component={LoginForm} />
-			<Route exact path="/registration" component={LoginForm} />
 			<PrivateRoute exact path="/countries" component={CountriesList} />
 			<PrivateRoute
 				exact
@@ -71,6 +71,16 @@ const BaseRouter = () => (
 				component={() => <AirplaneForm edit />}
 			/>
 			<PrivateRoute exact path="/airlines" component={AirlinesList} />
+			<PrivateRoute
+				exact
+				path="/airlines/add-airline"
+				component={AirlineForm}
+			/>
+			<PrivateRoute
+				exact
+				path="/airlines/:airlineID/edit"
+				component={() => <AirlineForm edit />}
+			/>
 		</Switch>
 	</div>
 );
