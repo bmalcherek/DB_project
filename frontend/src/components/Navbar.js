@@ -136,7 +136,7 @@ const Navbar = () => {
 						<Menu />
 					</IconButton>
 					<Typography className={classes.title} variant="h6">
-						Navbar
+						FlightsApp
 					</Typography>
 					<UserInfo />
 				</Toolbar>
