@@ -10,7 +10,7 @@ const AirportList = () => {
 	const [nameFilter, setNameFilter] = useState("");
 	const [icaoCodeFilter, setIcaoCodeFilter] = useState("");
 	const [iataCodeFilter, setIataCodeFilter] = useState("");
-	const [countryFilter, setCountryFilter] = useState("");
+	// const [countryFilter, setCountryFilter] = useState("");
 	const [orderBy, setOrderBy] = useState("name");
 	const [order, setOrder] = useState("desc");
 	const [edited, setEdited] = useState(false);
@@ -39,7 +39,7 @@ const AirportList = () => {
 				});
 			setAirports(ports);
 		}
-	}, [ogAirports, nameFilter, icaoCodeFilter, iataCodeFilter, countryFilter]);
+	}, [ogAirports, nameFilter, icaoCodeFilter, iataCodeFilter]);
 
 	useEffect(() => {
 		if (airports.length > 0) {
