@@ -9,29 +9,47 @@ from datetime import timedelta
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.db_project.settings')
 
-
 fakegen = Faker()
 
 
 def create_all_countries():
+    continent_map = {
+        'SA': 'South America',
+        'AF': 'Africa',
+        'EU': 'Europe',
+        'AS': 'Asia',
+        'NA': 'North America',
+        'OC': 'Australia'
+    }
+
     with open('flights/countries.json', 'r') as f:
         data = json.load(f)
+        count = 0
         for country in data:
             try:
-                _, created = Country.objects.get_or_create(
+                continent = data[country]['continent']
+                continent = continent_map[continent]
+
+                Country.objects.get_or_create(
                     name=data[country]['name'],
-                    continent=data[country]['continent'],
+                    continent=continent,
                     language=data[country]['languages'][0],
                     currency=data[country]['currency']
                 )
+                print(f"Created country: {data[country]['name']}")
+                count += 1
             except:
                 print("Error with record " + data[country]['name'])
+        print(f'Created {count} countries')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 
-def create_airports():
+def create_airports(airports=100):
     with open("flights/airports.json") as f:
         data = json.load(f)
-        for airport in data:
+        count = 0
+        while count < airports:
+            airport = random.choice(data)
             iata_code = airport['code']
             icao_code = airport['icao']
             name_air = airport['city'] + " " + airport['name']
@@ -40,44 +58,65 @@ def create_airports():
             except:
                 country = -1
             if iata_code == '' or icao_code == '' or name_air == '' or country == -1:
+                print("Error with record " + name_air)
                 continue
             else:
                 try:
-                    _, created = Airport.objects.get_or_create(
+                    Airport.objects.get_or_create(
                         name=name_air,
                         country=country,
                         IATA_code=iata_code,
                         ICAO_code=icao_code)
+                    print(f'Created airport: {name_air}')
+                    count += 1
                 except:
                     print("Error with record " + name_air)
 
+        print(f'Created {count} airports')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-def create_airlines():
+
+def create_airlines(airlines=100):
     with open("flights/airlines.json") as f:
         data = json.load(f)
-        for airline in data:
+        count = 0
+        while count < airlines:
+            airline = random.choice(data)
             iata_code = airline['iata']
             icao_code = airline['icao']
             name = airline['name']
             if iata_code == '' or icao_code == '':
+                print(f'Failed with: {name}')
                 continue
             else:
-                base_i = Airport.objects.order_by('?').first()
-                _, created = Airline.objects.get_or_create(
-                    iata_code=iata_code,
-                    icao_code=icao_code,
-                    name=name,
-                    base_airport=base_i
-                )
+                try:
+                    base_i = Airport.objects.order_by('?').first()
+                    Airline.objects.get_or_create(
+                        iata_code=iata_code,
+                        icao_code=icao_code,
+                        name=name,
+                        base_airport=base_i
+                    )
+                    print(f'Created airline: {name}')
+                    count += 1
+                except:
+                    print(f'Failed with: {name}')
+        print(f'Created {count} airlines')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 
-def create_crew(N):
-    size = N
+def make_crew(size=5):
     airline = Airline.objects.order_by('?').first()
     Crew.objects.get_or_create(
         size=size,
         airline=airline
     )
+
+
+def create_crews(crews=100):
+    for _ in range(crews):
+        crew_size = random.randint(3, 8)
+        make_crew(crew_size)
 
 
 def fill_crews():
@@ -99,34 +138,32 @@ def fill_crews():
 
 
 def create_airplane_models():
-    fake_gen = Faker()
     with open("flights/airplane_model.json") as f:
         data = json.load(f)
         for a in data:
             name = a['name']
             manufacturer = a['manufacturer']
-            symbol = fake_gen.ean(length=8)
+            symbol = a['symbol']
             AirplaneModel.objects.get_or_create(
                 name=name,
                 manufacturer=manufacturer,
                 symbol=symbol
-
             )
 
 
-def create_airplanes(N):
+def create_airplanes(airplanes=200):
     all_models = AirplaneModel.objects.all()
-    fake_gen = Faker()
-    for i in all_models:
-        for j in range(N):
-            data_prod = fake_gen.date_time_this_century(
-                before_now=True, after_now=False, tzinfo=None)
-            registration = fake_gen.ean8()
-            Airplane.objects.get_or_create(
-                produced=data_prod,
-                registration=registration,
-                airplane_model=i
-            )
+    for _ in range(airplanes):
+        model = random.choice(all_models)
+        registration = fakegen.pystr_format(
+            string_format='??-???', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+        prod_date = fakegen.date_time_this_century(
+            before_now=True, after_now=False, tzinfo=None)
+        Airplane.objects.get_or_create(
+            produced=prod_date,
+            registration=registration,
+            airplane_model=model
+        )
 
 
 def generate_flight():
@@ -143,24 +180,29 @@ def generate_flight():
     arrival_date = departure_date + timedelta(days=1)
     airplane = Airplane.objects.order_by('?').first()
     Flight.objects.get_or_create(
-        flight_number = number,
-        from_airport = from_airport,
-        to_airport = to_airport,
-        crew = crew,
-        airline = airline,
-        departure_date = departure_date,
-        arrival_date = arrival_date,
-        airplane = airplane,
-        num_places = random.randint(100,200)
+        flight_number=number,
+        from_airport=from_airport,
+        to_airport=to_airport,
+        crew=crew,
+        airline=airline,
+        departure_date=departure_date,
+        arrival_date=arrival_date,
+        airplane=airplane,
+        num_places=random.randint(100, 200)
     )
+
+
+def create_flights(flights=100):
+    for _ in range(flights):
+        generate_flight()
 
 
 def populate_database():
     create_all_countries()
     create_airports()
     create_airlines()
-    create_crew(1000)
+    create_crews()
     fill_crews()
     create_airplane_models()
-    create_airplanes(500)
-    generate_flight()
+    create_airplanes()
+    create_flights()

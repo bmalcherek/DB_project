@@ -68,11 +68,11 @@ WSGI_APPLICATION = 'db_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'flights',
-        'USER': 'bartek',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'luvfdxjt',
+        'USER': 'luvfdxjt',
+        'PASSWORD': 'J2YABVnq2cADg404yK1aOvpzjtkc4578',
+        'HOST': 'balarama.db.elephantsql.com',
         'PORT': '5432',
     }
 }

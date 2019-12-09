@@ -1,16 +1,23 @@
 [
-  {"name": "Boeing 747","manufacturer": "Boeing"},
-  {"name": "McDonnell Douglas MD-80","manufacturer": "McDonnell Douglas"},
-  {"name": "Airbus A318","manufacturer": "Airbus"},
-  {"name": "Airbus A319","manufacturer": "Airbus"},
-  {"name": "Airbus A320","manufacturer": "Airbus"},
-  {"name": "Airbus A300","manufacturer": "Airbus"},
-  {"name": "Airbus A321","manufacturer": "Airbus"},
-  {"name": "Fokker 100","manufacturer": "Fokker"},
-  {"name": "Airbus A350","manufacturer": "Airbus"},
-  {"name": "Airbus A321","manufacturer": "Airbus"},
-  {"name": "Lockheed L-1011","manufacturer": "Lockheed Corp"},
-  {"name": "Embraer 170","manufacturer": "AIrbu"},
-  {"name": "Embraer 190","manufacturer": "Embraer"},
-  {"name": "Tu-154","manufacturer": "Aviakor"}
+  { "name": "Boeing 747", "manufacturer": "Boeing", "symbol": "B747" },
+  {
+    "name": "McDonnell Douglas MD-80",
+    "manufacturer": "McDonnell Douglas",
+    "symbol": "MD-80"
+  },
+  { "name": "Airbus A318", "manufacturer": "Airbus", "symbol": "A318" },
+  { "name": "Airbus A319", "manufacturer": "Airbus", "symbol": "A319" },
+  { "name": "Airbus A320", "manufacturer": "Airbus", "symbol": "A320" },
+  { "name": "Airbus A300", "manufacturer": "Airbus", "symbol": "A300" },
+  { "name": "Airbus A321", "manufacturer": "Airbus", "symbol": "A321" },
+  { "name": "Fokker 100", "manufacturer": "Fokker", "symbol": "F100" },
+  { "name": "Airbus A350", "manufacturer": "Airbus", "symbol": "A350" },
+  {
+    "name": "Lockheed L-1011",
+    "manufacturer": "Lockheed Corp",
+    "symbol": "L-1011"
+  },
+  { "name": "Embraer 170", "manufacturer": "Embraer", "symbol": "E170" },
+  { "name": "Embraer 190", "manufacturer": "Embraer", "symbol": "E190" },
+  { "name": "Tupolev T-154", "manufacturer": "Aviakor", "symbol": "T-154" }
 ]

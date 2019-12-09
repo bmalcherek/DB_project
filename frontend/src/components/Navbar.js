@@ -17,7 +17,8 @@ import {
 	Public,
 	FlightTakeoff,
 	Flight,
-	Business
+	Business,
+	Group
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -109,6 +110,15 @@ const Navbar = () => {
 						<ListItemText primary="Airlines" />
 					</ListItem>
 				</Link>
+
+				<Link to="/crews" className="link">
+					<ListItem button>
+						<ListItemIcon>
+							<Group />
+						</ListItemIcon>
+						<ListItemText primary="Crews" />
+					</ListItem>
+				</Link>
 			</List>
 		</div>
 	);
@@ -126,7 +136,7 @@ const Navbar = () => {
 						<Menu />
 					</IconButton>
 					<Typography className={classes.title} variant="h6">
-						Navbar
+						FlightsApp
 					</Typography>
 					<UserInfo />
 				</Toolbar>
