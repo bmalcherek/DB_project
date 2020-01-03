@@ -260,6 +260,31 @@ class CrewMembersList (generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def member_detail(request, member_id):
+    try:
+        member = CrewMember.objects.get(id=member_id)
+    except CrewMember.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = CrewMemberSerializer(member)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = CrewMemberSerializer(member, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        member.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 class FlightsList (generics.ListCreateAPIView):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer

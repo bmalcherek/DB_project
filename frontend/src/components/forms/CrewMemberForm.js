@@ -39,7 +39,7 @@ const CrewMemberForm = props => {
 
 	useEffect(() => {
 		if (props.edit) {
-			const response = fetchData(`api/crew-members/${memberID}`);
+			const response = fetchData(`api/crew-members/${memberID}/`);
 			response.then(res => {
 				setName(res.data.name);
 				setAirline(res.data.airline);
