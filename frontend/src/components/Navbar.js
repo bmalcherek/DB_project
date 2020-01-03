@@ -121,7 +121,7 @@ const Navbar = () => {
 					</ListItem>
 				</Link>
 
-				<Link to="crew-members" className="link">
+				<Link to="/crew-members" className="link">
 					<ListItem button>
 						<ListItemIcon>
 							<Accessibility />

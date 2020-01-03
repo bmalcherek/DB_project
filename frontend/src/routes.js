@@ -18,6 +18,7 @@ import AirlineForm from "./components/forms/AirlineForm";
 import CrewsList from "./components/CrewsList";
 import CrewForm from "./components/forms/CrewForm";
 import CrewMembersList from "./components/CrewMembersList";
+import CrewMemberForm from "./components/forms/CrewMemberForm";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -92,6 +93,16 @@ const BaseRouter = () => (
 				component={() => <CrewForm edit />}
 			/>
 			<PrivateRoute exact path="/crew-members" component={CrewMembersList} />
+			<PrivateRoute
+				exact
+				path="/crew-members/add-crew-member"
+				component={CrewMemberForm}
+			/>
+			<PrivateRoute
+				exact
+				path="/crew-members/:memberID/edit"
+				component={() => <CrewMemberForm edit />}
+			/>
 		</Switch>
 	</div>
 );
