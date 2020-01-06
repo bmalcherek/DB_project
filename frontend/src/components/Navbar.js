@@ -19,7 +19,9 @@ import {
 	Flight,
 	Business,
 	Group,
-	Accessibility
+	Accessibility,
+	ConfirmationNumber,
+	LocalMall
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -127,6 +129,33 @@ const Navbar = () => {
 							<Accessibility />
 						</ListItemIcon>
 						<ListItemText primary="Crew Members" />
+					</ListItem>
+				</Link>
+
+				<Link to="/flights" className="link">
+					<ListItem button>
+						<ListItemIcon>
+							<Flight />
+						</ListItemIcon>
+						<ListItemText primary="Flights" />
+					</ListItem>
+				</Link>
+
+				<Link to="/reservations" className="link">
+					<ListItem button>
+						<ListItemIcon>
+							<ConfirmationNumber />
+						</ListItemIcon>
+						<ListItemText primary="Reservations" />
+					</ListItem>
+				</Link>
+
+				<Link to="/luggage" className="link">
+					<ListItem button>
+						<ListItemIcon>
+							<LocalMall />
+						</ListItemIcon>
+						<ListItemText primary="Luggage" />
 					</ListItem>
 				</Link>
 			</List>
