@@ -22,6 +22,7 @@ import CrewMemberForm from "./components/forms/CrewMemberForm";
 import FlightsList from "./components/FlightsList";
 import ReservationsList from "./components/ReservationsList";
 import LuggageList from "./components/LuggageList";
+import ReservationForm from "./components/forms/ReservationForm";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -110,6 +111,16 @@ const BaseRouter = () => (
 			<PrivateRoute exact path="/flights" component={FlightsList} />
 
 			<PrivateRoute exact path="/reservations" component={ReservationsList} />
+			<PrivateRoute
+				exact
+				path="/reservations/add-reservation"
+				component={ReservationForm}
+			/>
+			<PrivateRoute
+				exact
+				path="/reservations/:reservationID/edit"
+				component={() => <ReservationForm edit />}
+			/>
 
 			<PrivateRoute exact path="/luggage" component={LuggageList} />
 		</Switch>

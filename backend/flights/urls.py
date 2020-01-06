@@ -18,7 +18,8 @@ urlpatterns = [
     path('crew-members/', views.CrewMembersList.as_view()),
     path('crew-members/<int:member_id>/', views.member_detail),
     path('flights/', views.FlightsList.as_view()),
-    path('reservations/', views.ReservationsList.as_view()),
+    path('reservations/', views.reservations_list),
+    path('reservations/<int:reservation_id>/', views.reservation_detail),
     path('luggage/', views.LuggagesList.as_view()),
     path('username/', views.get_username),
     path('users/register/', views.create_user)

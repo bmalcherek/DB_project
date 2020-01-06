@@ -28,7 +28,7 @@ const ReservationsList = () => {
 			setReservations(
 				ogReservations.filter(
 					row =>
-						row.user.startsWith(userFilter) &&
+						row.user.toString().startsWith(userFilter) &&
 						row.flight.toString().startsWith(flightFilter) &&
 						row.price.toString().startsWith(priceFilter)
 				)

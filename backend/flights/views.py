@@ -297,6 +297,56 @@ class ReservationsList (generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def reservations_list(request):
+    if request.method == 'GET':
+        queryset = Reservation.objects.all()
+        serializer = ReservationSerializer(queryset, many=True)
+
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = {
+            'user': request.user.id,
+            'flight': request.data['flight'],
+            'price': request.data['price']
+        }
+        serializer = ReservationSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def reservation_detail(request, reservation_id):
+    try:
+        reservation = Reservation.objects.get(id=reservation_id)
+    except Reservation.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = ReservationSerializer(reservation)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ReservationSerializer(reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        reservation.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 class LuggagesList (generics.ListCreateAPIView):
     queryset = Luggage.objects.all()
     serializer_class = LuggageSerializer

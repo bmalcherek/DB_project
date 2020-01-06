@@ -67,8 +67,6 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
     price = models.FloatField()
-    places = models.IntegerField()
-
 
 def create_reservation(sender, **kwargs):
     if kwargs['created']:
@@ -79,7 +77,7 @@ def create_reservation(sender, **kwargs):
             kwargs['instance'].flight.save()
 
 
-post_save.connect(create_reservation, sender=Reservation)
+# post_save.connect(create_reservation, sender=Reservation)
 
 
 class Luggage(models.Model):
