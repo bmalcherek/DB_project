@@ -19,7 +19,7 @@ urlpatterns = [
     path('crew-members/<int:member_id>/', views.member_detail),
     path('flights/', views.FlightsList.as_view()),
     path('reservations/', views.ReservationsList.as_view()),
-    path('luggages/', views.LuggagesList.as_view()),
+    path('luggage/', views.LuggagesList.as_view()),
     path('username/', views.get_username),
     path('users/register/', views.create_user)
 ]
