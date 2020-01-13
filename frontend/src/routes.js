@@ -17,6 +17,12 @@ import RegistrationForm from "./components/forms/RegistrationForm";
 import AirlineForm from "./components/forms/AirlineForm";
 import CrewsList from "./components/CrewsList";
 import CrewForm from "./components/forms/CrewForm";
+import CrewMembersList from "./components/CrewMembersList";
+import CrewMemberForm from "./components/forms/CrewMemberForm";
+import FlightsList from "./components/FlightsList";
+import ReservationsList from "./components/ReservationsList";
+import LuggageList from "./components/LuggageList";
+import ReservationForm from "./components/forms/ReservationForm";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -90,6 +96,33 @@ const BaseRouter = () => (
 				path="/crews/:crewID/edit"
 				component={() => <CrewForm edit />}
 			/>
+			<PrivateRoute exact path="/crew-members" component={CrewMembersList} />
+			<PrivateRoute
+				exact
+				path="/crew-members/add-crew-member"
+				component={CrewMemberForm}
+			/>
+			<PrivateRoute
+				exact
+				path="/crew-members/:memberID/edit"
+				component={() => <CrewMemberForm edit />}
+			/>
+
+			<PrivateRoute exact path="/flights" component={FlightsList} />
+
+			<PrivateRoute exact path="/reservations" component={ReservationsList} />
+			<PrivateRoute
+				exact
+				path="/reservations/add-reservation"
+				component={ReservationForm}
+			/>
+			<PrivateRoute
+				exact
+				path="/reservations/:reservationID/edit"
+				component={() => <ReservationForm edit />}
+			/>
+
+			<PrivateRoute exact path="/luggage" component={LuggageList} />
 		</Switch>
 	</div>
 );
