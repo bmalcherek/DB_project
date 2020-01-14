@@ -58,7 +58,7 @@ const AirportList = () => {
 			<TableCell align="right">{airport.ICAO_code}</TableCell>
 			<TableCell align="right">{airport.country}</TableCell>
 			<TableActions
-				editLink={`/airlines/${airport.id}/edit`}
+				editLink={`/airports/${airport.id}/edit`}
 				setEdited={setEdited}
 				url="api/airports"
 				itemID={airport.id}

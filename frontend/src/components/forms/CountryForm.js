@@ -16,10 +16,6 @@ import { postData, fetchData, putData } from "../../helpers";
 
 import "../../styles/Forms.css";
 
-//TODO: validate all inputs not empty
-//TODO: validate currency on 3 characters
-//TODO: add post data error handling
-
 const useStyles = makeStyles(theme => ({
 	formControl: {
 		margin: theme.spacing(1)
@@ -65,8 +61,12 @@ const CountryForm = props => {
 	};
 
 	useEffect(() => {
-		document.title = "Add Country";
-	}, []);
+		if (props.edit) {
+			document.title = "Edit Country";
+		} else {
+			document.title = "Add Country";
+		}
+	}, [props.edit]);
 
 	useEffect(() => {
 		if (props.edit) {
@@ -109,7 +109,8 @@ const CountryForm = props => {
 
 	return (
 		<div id="form-container">
-			<Typography>Add Continent</Typography>
+			<Typography>{props.edit ? "Edit Country" : "Add Continent"}</Typography>
+
 			<FormControl className={classes.formControl}>
 				<TextField
 					value={name}

@@ -43,8 +43,12 @@ const AirportForm = props => {
 	const { airportID } = useParams();
 
 	useEffect(() => {
-		document.title = "Add Airport";
-	}, []);
+		if (props.edit) {
+			document.title = "Edit Airport";
+		} else {
+			document.title = "Add Airport";
+		}
+	}, [props.edit]);
 
 	useEffect(() => {
 		const response = fetchData("api/countries/");
@@ -116,7 +120,7 @@ const AirportForm = props => {
 
 	return (
 		<div id="form-container">
-			<Typography>Add Airport</Typography>
+			<Typography>{props.edit ? "Edit Airport" : "Add Airport"}</Typography>
 
 			<FormControl className={classes.formControl}>
 				<TextField
