@@ -16,6 +16,10 @@ const AirportList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Airports List";
+	});
+
+	useEffect(() => {
 		const response = fetchData("api/airports/");
 		response.then(res => {
 			setAirports(res.data);
