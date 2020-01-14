@@ -16,6 +16,10 @@ const AirlinesList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Airlines List";
+	}, []);
+
+	useEffect(() => {
 		const response = fetchData("api/airlines/");
 		response.then(res => {
 			setAirlines(res.data);
