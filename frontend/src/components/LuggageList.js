@@ -15,6 +15,10 @@ const LuggageList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Luggage List";
+	}, []);
+
+	useEffect(() => {
 		const response = fetchData("api/luggage/");
 		response.then(res => {
 			setLuggage(res.data);

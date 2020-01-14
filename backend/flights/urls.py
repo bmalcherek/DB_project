@@ -21,6 +21,8 @@ urlpatterns = [
     path('reservations/', views.reservations_list),
     path('reservations/<int:reservation_id>/', views.reservation_detail),
     path('luggage/', views.LuggagesList.as_view()),
+    path('luggage/<int:luggage_id>/', views.luggage_detail),
     path('username/', views.get_username),
+    path('luggage/<int:luggage_id>/', views.luggage_detail),
     path('users/register/', views.create_user)
 ]

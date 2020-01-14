@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 
+// import axios from "axios";
 import { postData } from "../../helpers";
 import { useAuthValue } from "../../context";
 
@@ -43,8 +44,11 @@ const LoginForm = () => {
 		const data = { username: usernameField, password };
 
 		const response = postData("api/token/", data);
+		// const response = axios.post(
+		// `${process.env.REACT_APP_API_URL}api/token/`,
+		// data
+		// );
 		response.then(res => {
-			console.log(res.data);
 			localStorage.setItem("access", res.data.access);
 			localStorage.setItem("refresh", res.data.refresh);
 			const today = new Date();
