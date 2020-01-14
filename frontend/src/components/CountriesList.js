@@ -22,6 +22,10 @@ const Countrieslist = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Countries List";
+	}, []);
+
+	useEffect(() => {
 		const response = fetchData("api/countries/");
 		response.then(res => {
 			setCountries(res.data);
