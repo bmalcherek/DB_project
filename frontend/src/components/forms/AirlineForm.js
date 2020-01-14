@@ -31,15 +31,24 @@ const AirlineForm = props => {
 	const [name, setName] = useState("");
 	const [baseAirport, setBaseAirport] = useState("");
 	const [airports, setAirports] = useState([]);
+	const [errors, setErrors] = useState({
+		name: "",
+		iata_code: "",
+		icao_code: "",
+		base_airport: ""
+	});
 
 	const history = useHistory();
 	const { airlineID } = useParams();
 	const classes = useStyles();
 
 	useEffect(() => {
-		document.title = "Add Airline";
-		return () => (document.title = "FlightsApp");
-	}, []);
+		if (props.edit) {
+			document.title = "Edit Airline";
+		} else {
+			document.title = "Add Airline";
+		}
+	}, [props.edit]);
 
 	useEffect(() => {
 		const response = fetchData("api/airports/");
@@ -74,9 +83,17 @@ const AirlineForm = props => {
 		} else {
 			response = postData("api/airlines/", data);
 		}
-		response.then(history.push("/airlines"));
+		response.then(() => history.push("/airlines"));
 		response.catch(err => {
-			console.log(err);
+			let newErrors = {};
+			for (var key in errors) {
+				if (key in err.response.data) {
+					newErrors[key] = err.response.data[key][0];
+				} else {
+					newErrors[key] = "";
+				}
+			}
+			setErrors(newErrors);
 		});
 	};
 
@@ -89,7 +106,7 @@ const AirlineForm = props => {
 	return (
 		<div id="form-container">
 			<Typography syle={{ marginTop: 10 }}>
-				<b>Add Airline</b>
+				{props.edit ? "Edit Airline" : "Add Airline"}
 			</Typography>
 
 			<FormControl className={classes.formControl}>
@@ -100,6 +117,8 @@ const AirlineForm = props => {
 					id="name-field"
 					label="Name"
 					variant="outlined"
+					error={errors.name.length > 0}
+					helperText={errors.name}
 				/>
 			</FormControl>
 
@@ -111,6 +130,8 @@ const AirlineForm = props => {
 					id="iata-code-field"
 					label="IATA Code"
 					variant="outlined"
+					error={errors.iata_code.length > 0}
+					helperText={errors.iata_code}
 				/>
 			</FormControl>
 
@@ -122,6 +143,8 @@ const AirlineForm = props => {
 					id="icao-code-field"
 					label="ICAO Code"
 					variant="outlined"
+					error={errors.icao_code.length > 0}
+					helperText={errors.icao_code}
 				/>
 			</FormControl>
 
@@ -133,10 +156,16 @@ const AirlineForm = props => {
 					name="airport"
 					value={baseAirport}
 					onChange={event => setBaseAirport(event.target.value)}
+					error={errors.base_airport.length > 0}
 				>
 					{airportOptions}
 				</Select>
 				<FormHelperText>
+					{errors.base_airport.length > 0 ? (
+						<Typography style={{ color: "#f44336", fontSize: 12 }}>
+							{errors.base_airport}
+						</Typography>
+					) : null}
 					<Link to="/airports/add-airport" className="link">
 						If airport not visible click here
 					</Link>
