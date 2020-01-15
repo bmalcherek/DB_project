@@ -13,6 +13,10 @@ const AirplanesList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Airplanes List";
+	});
+
+	useEffect(() => {
 		const response = fetchData("api/airplanes/");
 		response.then(res => {
 			setAirplanes(res.data);

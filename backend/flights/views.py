@@ -351,3 +351,28 @@ class LuggagesList (generics.ListCreateAPIView):
     queryset = Luggage.objects.all()
     serializer_class = LuggageSerializer
     permission_classes = [IsAuthenticated]
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def luggage_detail(request, luggage_id):
+    try:
+        luggage = Luggage.objects.get(id=luggage_id)
+    except Luggage.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = LuggageSerializer(luggage)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = LuggageSerializer(luggage, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        luggage.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)

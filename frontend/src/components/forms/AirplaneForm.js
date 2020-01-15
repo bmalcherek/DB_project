@@ -35,10 +35,23 @@ const AirplaneForm = props => {
 	const [date, setDate] = useState(new Date(Date.now()));
 	const [airplaneModel, setAirplaneModel] = useState("");
 	const [airplaneModels, setAirplaneModels] = useState([]);
+	const [errors, setErrors] = useState({
+		registration: "",
+		produced: "",
+		airplane_model: ""
+	});
 
 	const history = useHistory();
 	const { airplaneID } = useParams();
 	const classes = useStyles();
+
+	useEffect(() => {
+		if (props.edit) {
+			document.title = "Edit Airplane";
+		} else {
+			document.title = "Add Airplane";
+		}
+	}, [props.edit]);
 
 	useEffect(() => {
 		const response = fetchData("api/airplane-models/");
@@ -65,8 +78,6 @@ const AirplaneForm = props => {
 			airplane_model: airplaneModel
 		};
 
-		console.log(date.toISOString().split("T")[0]);
-
 		let response;
 		if (props.edit) {
 			response = putData(`api/airplanes/${airplaneID}/`, data);
@@ -75,6 +86,17 @@ const AirplaneForm = props => {
 		}
 
 		response.then(() => history.push("/airplanes"));
+		response.catch(err => {
+			let newErrors = {};
+			for (var key in errors) {
+				if (key in err.response.data) {
+					newErrors[key] = err.response.data[key][0];
+				} else {
+					newErrors[key] = "";
+				}
+			}
+			setErrors(newErrors);
+		});
 	};
 
 	const airplaneModelOptions = airplaneModels.map(airplaneModel => (
@@ -86,7 +108,7 @@ const AirplaneForm = props => {
 	return (
 		<div id="form-container">
 			<Typography style={{ marginTop: 10 }}>
-				<b>Add Airplane</b>
+				{props.edit ? "Edit Airplane" : "Add Airplane"}
 			</Typography>
 
 			<FormControl className={classes.formControl}>
@@ -97,6 +119,8 @@ const AirplaneForm = props => {
 					id="registration-field"
 					label="Registration"
 					variant="outlined"
+					error={errors.registration.length > 0}
+					helperText={errors.registration}
 				/>
 			</FormControl>
 
@@ -110,11 +134,19 @@ const AirplaneForm = props => {
 						format="yyyy-MM-dd"
 						value={date}
 						onChange={date => setDate(date)}
+						error={errors.produced.length > 0}
 						KeyboardButtonProps={{
 							"aria-label": "change date"
 						}}
 					/>
 				</MuiPickersUtilsProvider>
+				{errors.produced.length > 0 ? (
+					<FormHelperText>
+						<Typography style={{ color: "#f44336", fontSize: 12 }}>
+							{errors.produced}
+						</Typography>
+					</FormHelperText>
+				) : null}
 			</FormControl>
 
 			<FormControl className={classes.formControl}>
@@ -125,10 +157,16 @@ const AirplaneForm = props => {
 					name="airplane-model"
 					value={airplaneModel}
 					onChange={event => setAirplaneModel(event.target.value)}
+					error={errors.airplane_model.length > 0}
 				>
 					{airplaneModelOptions}
 				</Select>
 				<FormHelperText>
+					{errors.airplane_model.length > 0 ? (
+						<Typography style={{ color: "#f44336", fontSize: 12 }}>
+							{errors.airplane_model}
+						</Typography>
+					) : null}
 					<Link to="/airplane-models/add-airplane-model" className="link">
 						If airplane model not visible click here
 					</Link>

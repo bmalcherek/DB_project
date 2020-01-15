@@ -21,6 +21,10 @@ const AirplaneModelsList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Airplane Models List";
+	}, []);
+
+	useEffect(() => {
 		const response = fetchData("api/airplane-models/");
 		response.then(res => {
 			setOgAirplaneModels(res.data);
@@ -28,6 +32,29 @@ const AirplaneModelsList = () => {
 			setEdited(false);
 		});
 	}, [edited]);
+
+	useEffect(() => {
+		if (ogAirplaneModels.length > 0) {
+			let models = ogAirplaneModels;
+			models = models
+				.filter(row => {
+					return row.name.toLowerCase().startsWith(nameFilter);
+				})
+				.filter(row => {
+					return row.manufacturer.toLowerCase().startsWith(manufacturerFilter);
+				})
+				.filter(row => {
+					return row.symbol.toLowerCase().startsWith(symbolFilter);
+				});
+			setAirplaneModels(models);
+		}
+	}, [nameFilter, manufacturerFilter, symbolFilter, ogAirplaneModels]);
+
+	useEffect(() => {
+		if (airplaneModels.length > 0) {
+			setAirplaneModels(listSort(airplaneModels, orderBy, order));
+		}
+	}, [order, orderBy, airplaneModels]);
 
 	const airplaneModelsTableRows = airplaneModels.map(airplaneModel => (
 		<TableRow key={airplaneModel.id}>
@@ -64,29 +91,6 @@ const AirplaneModelsList = () => {
 		{ align: "right", name: "Manufacturer" },
 		{ align: "right", name: "Symbol" }
 	];
-
-	useEffect(() => {
-		if (ogAirplaneModels.length > 0) {
-			let models = ogAirplaneModels;
-			models = models
-				.filter(row => {
-					return row.name.toLowerCase().startsWith(nameFilter);
-				})
-				.filter(row => {
-					return row.manufacturer.toLowerCase().startsWith(manufacturerFilter);
-				})
-				.filter(row => {
-					return row.symbol.toLowerCase().startsWith(symbolFilter);
-				});
-			setAirplaneModels(models);
-		}
-	}, [nameFilter, manufacturerFilter, symbolFilter, ogAirplaneModels]);
-
-	useEffect(() => {
-		if (airplaneModels.length > 0) {
-			setAirplaneModels(listSort(airplaneModels, orderBy, order));
-		}
-	}, [order, orderBy, airplaneModels]);
 
 	const handleOrder = name => {
 		if (orderBy === name) {

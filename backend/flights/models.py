@@ -30,8 +30,8 @@ class Airplane(models.Model):
 
 
 class Airline(models.Model):
-    iata_code = models.CharField(max_length=2)
-    icao_code = models.CharField(max_length=3)
+    iata_code = models.CharField(max_length=3)
+    icao_code = models.CharField(max_length=4)
     name = models.CharField(max_length=100)
     base_airport = models.ForeignKey(Airport, on_delete=models.PROTECT)
 

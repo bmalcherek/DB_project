@@ -5,18 +5,16 @@ import {
 	MenuItem,
 	InputLabel,
 	TextField,
+	Typography,
 	Button,
-	makeStyles
+	makeStyles,
+	FormHelperText
 } from "@material-ui/core";
 import { useHistory, useParams } from "react-router-dom";
 
 import { postData, fetchData, putData } from "../../helpers";
 
 import "../../styles/Forms.css";
-
-//TODO: validate all inputs not empty
-//TODO: validate currency on 3 characters
-//TODO: add post data error handling
 
 const useStyles = makeStyles(theme => ({
 	formControl: {
@@ -32,6 +30,12 @@ const CountryForm = props => {
 	const [continent, setContinent] = useState("");
 	const [language, setLanguage] = useState("");
 	const [currency, setCurrency] = useState("");
+	const [errors, setErrors] = useState({
+		name: "",
+		language: "",
+		currency: "",
+		continent: ""
+	});
 
 	const classes = useStyles();
 	let history = useHistory();
@@ -55,6 +59,14 @@ const CountryForm = props => {
 				console.log("error");
 		}
 	};
+
+	useEffect(() => {
+		if (props.edit) {
+			document.title = "Edit Country";
+		} else {
+			document.title = "Add Country";
+		}
+	}, [props.edit]);
 
 	useEffect(() => {
 		if (props.edit) {
@@ -82,22 +94,37 @@ const CountryForm = props => {
 			response = postData("api/countries/", data);
 		}
 		response.then(() => history.push("/countries"));
+		response.catch(err => {
+			let newErrors = {};
+			for (var key in errors) {
+				if (key in err.response.data) {
+					newErrors[key] = err.response.data[key][0];
+				} else {
+					newErrors[key] = "";
+				}
+			}
+			setErrors(newErrors);
+		});
 	};
 
 	return (
 		<div id="form-container">
+			<Typography>{props.edit ? "Edit Country" : "Add Continent"}</Typography>
+
 			<FormControl className={classes.formControl}>
 				<TextField
 					value={name}
 					onChange={handleChange}
 					name="name"
 					id="name-field"
-					label="Name:"
+					label="Name"
 					variant="outlined"
+					error={errors.name.length > 0 ? true : false}
+					helperText={errors.name}
 				/>
 			</FormControl>
 
-			<FormControl className={classes.formControl} variant="outlined">
+			<FormControl className={classes.formControl}>
 				<InputLabel id="continent-label">Continent</InputLabel>
 				<Select
 					labelId="continent-label"
@@ -105,6 +132,7 @@ const CountryForm = props => {
 					id="continent-select"
 					value={continent}
 					onChange={handleChange}
+					error={errors.continent.length > 0 ? true : false}
 				>
 					<MenuItem value="Africa">Africa</MenuItem>
 					<MenuItem value="Asia">Asia</MenuItem>
@@ -114,6 +142,13 @@ const CountryForm = props => {
 					<MenuItem value="South America">South America</MenuItem>
 					<MenuItem value="Antarcitca">Antarcitca</MenuItem>
 				</Select>
+				{errors.continent.length > 0 ? (
+					<FormHelperText>
+						<Typography style={{ color: "#f44336", fontSize: 12 }}>
+							{errors.continent}
+						</Typography>
+					</FormHelperText>
+				) : null}
 			</FormControl>
 
 			<FormControl className={classes.formControl}>
@@ -122,8 +157,10 @@ const CountryForm = props => {
 					onChange={handleChange}
 					value={currency}
 					id="currency-field"
-					label="Currency:"
+					label="Currency"
 					variant="outlined"
+					error={errors.currency.length > 0 ? true : false}
+					helperText={errors.currency}
 				/>
 			</FormControl>
 
@@ -133,8 +170,10 @@ const CountryForm = props => {
 					onChange={handleChange}
 					value={language}
 					id="language-field"
-					label="Language:"
+					label="Language"
 					variant="outlined"
+					error={errors.language.length > 0 ? true : false}
+					helperText={errors.language}
 				/>
 			</FormControl>
 
