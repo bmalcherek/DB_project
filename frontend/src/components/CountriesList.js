@@ -37,19 +37,26 @@ const Countrieslist = () => {
 	useEffect(() => {
 		if (ogCountries.length > 0) {
 			setCountries(
-				ogCountries
-					.filter(row => {
-						return row.name.toLowerCase().startsWith(nameFilter);
-					})
-					.filter(row => {
-						return row.continent.toLowerCase().startsWith(continentFilter);
-					})
-					.filter(row => {
-						return row.currency.toLowerCase().startsWith(currencyFilter);
-					})
-					.filter(row => {
-						return row.language.toLowerCase().startsWith(languageFilter);
-					})
+				ogCountries.filter(row => {
+					return (
+						row.name
+							.toString()
+							.toLowerCase()
+							.startsWith(nameFilter.toString()) &&
+						row.continent
+							.toString()
+							.toLowerCase()
+							.startsWith(continentFilter.toString()) &&
+						row.currency
+							.toString()
+							.toLowerCase()
+							.startsWith(currencyFilter.toString()) &&
+						row.language
+							.toString()
+							.toLowerCase()
+							.startsWith(languageFilter.toString())
+					);
+				})
 			);
 		}
 	}, [

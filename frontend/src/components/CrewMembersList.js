@@ -24,14 +24,20 @@ const CrewMembersList = () => {
 
 	useEffect(() => {
 		if (ogCrewMembers.length > 0) {
-			let members = ogCrewMembers;
-			members = members
-				.filter(row => {
-					return row.name.toLowerCase().startsWith(nameFilter);
+			setCrewMembers(
+				ogCrewMembers.filter(row => {
+					return (
+						row.name
+							.toString()
+							.toLowerCase()
+							.startsWith(nameFilter.toLowerCase()) &&
+						row.job_title
+							.toStirng()
+							.toLowerCase()
+							.startsWith(jobTitleFilter.toLowerCase())
+					);
 				})
-				.filter(row => {
-					return row.job_title.toLowerCase().startsWith(jobTitleFilter);
-				});
+			);
 			setCrewMembers(members);
 		}
 	}, [ogCrewMembers, nameFilter, jobTitleFilter]);

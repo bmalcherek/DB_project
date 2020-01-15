@@ -30,18 +30,15 @@ const AirportList = () => {
 
 	useEffect(() => {
 		if (ogAirports.length > 0) {
-			let ports = ogAirports;
-			ports = ports
-				.filter(row => {
-					return row.name.toLowerCase().startsWith(nameFilter);
+			setAirports(
+				ogAirports.filter(row => {
+					return (
+						row.name.toLowerCase().startsWith(nameFilter) &&
+						row.IATA_code.toLowerCase().startsWith(iataCodeFilter) &&
+						row.ICAO_code.toLowerCase().startsWith(icaoCodeFilter)
+					);
 				})
-				.filter(row => {
-					return row.IATA_code.toLowerCase().startsWith(iataCodeFilter);
-				})
-				.filter(row => {
-					return row.ICAO_code.toLowerCase().startsWith(icaoCodeFilter);
-				});
-			setAirports(ports);
+			);
 		}
 	}, [ogAirports, nameFilter, icaoCodeFilter, iataCodeFilter]);
 

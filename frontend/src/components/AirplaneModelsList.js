@@ -35,18 +35,24 @@ const AirplaneModelsList = () => {
 
 	useEffect(() => {
 		if (ogAirplaneModels.length > 0) {
-			let models = ogAirplaneModels;
-			models = models
-				.filter(row => {
-					return row.name.toLowerCase().startsWith(nameFilter);
+			setAirplaneModels(
+				ogAirplaneModels.filter(row => {
+					return (
+						row.name
+							.toString()
+							.toLowerCase()
+							.startsWith(nameFilter.toLowerCase()) &&
+						row.manufacturer
+							.toString()
+							.toLowerCase()
+							.startsWith(manufacturerFilter.toLowerCase()) &&
+						row.symbol
+							.toString()
+							.toLowerCase()
+							.startsWith(symbolFilter.toLowerCase())
+					);
 				})
-				.filter(row => {
-					return row.manufacturer.toLowerCase().startsWith(manufacturerFilter);
-				})
-				.filter(row => {
-					return row.symbol.toLowerCase().startsWith(symbolFilter);
-				});
-			setAirplaneModels(models);
+			);
 		}
 	}, [nameFilter, manufacturerFilter, symbolFilter, ogAirplaneModels]);
 

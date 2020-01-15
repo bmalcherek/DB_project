@@ -27,11 +27,14 @@ const AirplanesList = () => {
 
 	useEffect(() => {
 		if (ogAirplanes.length > 0) {
-			let planes = ogAirplanes;
-			planes = planes.filter(row => {
-				return row.registration.toLowerCase().startsWith(registrationFilter);
-			});
-			setAirplanes(planes);
+			setAirplanes(
+				ogAirplanes.filter(row => {
+					return row.registration
+						.toString()
+						.toLowerCase()
+						.startsWith(registrationFilter.toLowerCase());
+				})
+			);
 		}
 	}, [registrationFilter, ogAirplanes]);
 

@@ -30,18 +30,24 @@ const AirlinesList = () => {
 
 	useEffect(() => {
 		if (ogAirlines.length > 0) {
-			let lines = ogAirlines;
-			lines = lines
-				.filter(row => {
-					return row.name.toLowerCase().startsWith(nameFilter);
+			setAirlines(
+				ogAirlines.filter(row => {
+					return (
+						row.name
+							.toString()
+							.toLowerCase()
+							.startsWith(nameFilter.toLowerCase()) &&
+						row.iata_code
+							.toString()
+							.toLowerCase()
+							.startsWith(iataCodeFilter.toLowerCase()) &&
+						row.icao_code
+							.toString()
+							.toLowerCase()
+							.startsWith(icaoCodeFilter.toLowerCase())
+					);
 				})
-				.filter(row => {
-					return row.iata_code.toLowerCase().startsWith(iataCodeFilter);
-				})
-				.filter(row => {
-					return row.icao_code.toLowerCase().startsWith(icaoCodeFilter);
-				});
-			setAirlines(lines);
+			);
 		}
 	}, [
 		ogAirlines,
