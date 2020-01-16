@@ -24,6 +24,7 @@ import ReservationsList from "./components/ReservationsList";
 import LuggageList from "./components/LuggageList";
 import ReservationForm from "./components/forms/ReservationForm";
 import LuggageForm from "./components/forms/LuggageForm";
+import FlightForm from "./components/forms/FlightForm";
 
 const BaseRouter = () => (
 	<div id="router">
@@ -110,6 +111,12 @@ const BaseRouter = () => (
 			/>
 
 			<PrivateRoute exact path="/flights" component={FlightsList} />
+			<PrivateRoute exact path="/flights/add-flight" component={FlightForm} />
+			<PrivateRoute
+				exact
+				path="/flights/:flightID/edit"
+				component={() => <FlightForm edit />}
+			/>
 
 			<PrivateRoute exact path="/reservations" component={ReservationsList} />
 			<PrivateRoute
