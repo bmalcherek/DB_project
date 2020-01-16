@@ -29,13 +29,24 @@ const ReservationForm = props => {
 	const [flight, setFlight] = useState("");
 	const [price, setPrice] = useState("");
 	const [flights, setFlights] = useState([]);
+	const [errors, setErrors] = useState({
+		flight: "",
+		price: ""
+	});
 
 	const classes = useStyles();
 	let history = useHistory();
 	const { reservationID } = useParams();
 
 	useEffect(() => {
-		document.title = "Add Reservation";
+		if (props.edit) {
+			document.title = "Edit Reservation";
+		} else {
+			document.title = "Add Reservation";
+		}
+	});
+
+	useEffect(() => {
 		const response = fetchData("api/flights/");
 		response.then(res => setFlights(res.data));
 	}, []);
@@ -64,6 +75,17 @@ const ReservationForm = props => {
 			response = postData("api/reservations/", data);
 		}
 		response.then(() => history.push("/reservations"));
+		response.catch(err => {
+			let newErrors = {};
+			for (var key in errors) {
+				if (key in err.response.data) {
+					newErrors[key] = err.response.data[key][0];
+				} else {
+					newErrors[key] = "";
+				}
+			}
+			setErrors(newErrors);
+		});
 	};
 
 	const flightsOptions = flights.map(flight => (
@@ -74,9 +96,11 @@ const ReservationForm = props => {
 
 	return (
 		<div id="form-container">
-			<Typography style={{ marginTop: 10 }}>Add Reservation</Typography>
+			<Typography style={{ marginTop: 10 }}>
+				{props.edit ? "Edit Reservation" : "Add Reservation"}
+			</Typography>
 
-			<FormControl className={classes.formControl}>
+			<FormControl className={classes.formControl} style={{ width: 235 }}>
 				<InputLabel id="flight-select-label">Flight</InputLabel>
 				<Select
 					labelId="flight-select-label"
@@ -84,10 +108,17 @@ const ReservationForm = props => {
 					name="flight"
 					value={flight}
 					onChange={event => setFlight(event.target.value)}
+					error={errors.flight.length > 0}
 				>
 					{flightsOptions}
 				</Select>
 				<FormHelperText>
+					{errors.flight.length > 0 ? (
+						<Typography style={{ color: "#f44336", fontSize: 12 }}>
+							{errors.flight}
+						</Typography>
+					) : null}
+
 					<Link to="/flights/add-flight" className="link">
 						If flight does not exist, click here
 					</Link>
@@ -102,6 +133,8 @@ const ReservationForm = props => {
 					id="price-field"
 					label="Price"
 					variant="outlined"
+					error={errors.price.length > 0}
+					helperText={errors.price}
 				/>
 			</FormControl>
 

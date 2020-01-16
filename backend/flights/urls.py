@@ -18,6 +18,7 @@ urlpatterns = [
     path('crew-members/', views.CrewMembersList.as_view()),
     path('crew-members/<int:member_id>/', views.member_detail),
     path('flights/', views.FlightsList.as_view()),
+    path('flights/<int:flight_id>/', views.flight_detail),
     path('reservations/', views.reservations_list),
     path('reservations/<int:reservation_id>/', views.reservation_detail),
     path('luggage/', views.LuggagesList.as_view()),

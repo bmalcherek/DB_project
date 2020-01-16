@@ -15,6 +15,10 @@ const ReservationsList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Reservations List";
+	}, []);
+
+	useEffect(() => {
 		const response = fetchData("api/reservations/");
 		response.then(res => {
 			setReservations(res.data);

@@ -58,8 +58,8 @@ class Flight(models.Model):
     crew = models.ForeignKey(Crew, on_delete=models.SET_NULL, null=True)
     airplane = models.ForeignKey(
         Airplane, on_delete=models.SET_NULL, null=True)
-    departure_date = models.DateField()
-    arrival_date = models.DateField()
+    departure_date = models.DateTimeField()
+    arrival_date = models.DateTimeField()
     num_places = models.IntegerField()
 
 

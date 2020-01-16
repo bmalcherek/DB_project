@@ -14,6 +14,10 @@ const CrewMembersList = () => {
 	const [edited, setEdited] = useState(false);
 
 	useEffect(() => {
+		document.title = "Crew Members List";
+	});
+
+	useEffect(() => {
 		const response = fetchData("api/crew-members/");
 		response.then(res => {
 			setCrewMembers(res.data);

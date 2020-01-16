@@ -143,9 +143,7 @@ const LuggageForm = props => {
 						<Typography style={{ color: "#f44336", fontSize: 12 }}>
 							{errors.reservation}
 						</Typography>
-					) : (
-						""
-					)}
+					) : null}
 					<Link to="/reservations/add-reservation" className="link">
 						Click here to create reservation
 					</Link>
