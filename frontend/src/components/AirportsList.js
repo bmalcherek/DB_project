@@ -56,7 +56,7 @@ const AirportList = () => {
 			<TableCell>{airport.name}</TableCell>
 			<TableCell align="right">{airport.IATA_code}</TableCell>
 			<TableCell align="right">{airport.ICAO_code}</TableCell>
-			<TableCell align="right">{airport.country}</TableCell>
+			<TableCell align="right">{airport.country.name}</TableCell>
 			<TableActions
 				editLink={`/airports/${airport.id}/edit`}
 				setEdited={setEdited}
