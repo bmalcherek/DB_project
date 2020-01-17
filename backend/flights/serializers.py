@@ -110,7 +110,7 @@ class ReservationSerializer (serializers.ModelSerializer):
 
     user = serializers.SlugRelatedField(
         slug_field="username",
-        read_only=True
+        queryset=get_user_model().objects.all()
     )
 
     class Meta:

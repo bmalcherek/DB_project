@@ -199,10 +199,10 @@ def create_flights(flights=100):
 
 def populate_database():
     create_all_countries()
-    create_airports()
-    create_airlines()
-    create_crews()
+    create_airports(50)
+    create_airlines(50)
+    create_crews(25)
     fill_crews()
     create_airplane_models()
-    create_airplanes()
-    create_flights()
+    create_airplanes(50)
+    create_flights(50)

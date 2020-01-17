@@ -69,11 +69,17 @@ WSGI_APPLICATION = 'db_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'luvfdxjt',
-        'USER': 'luvfdxjt',
-        'PASSWORD': 'J2YABVnq2cADg404yK1aOvpzjtkc4578',
-        'HOST': 'balarama.db.elephantsql.com',
+        'NAME': 'flights',
+        'USER': 'postgres',
+        'PASSWORD': 'db2020',
+        'HOST': '34.89.168.234',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'verify-ca',            
+            'sslrootcert': os.path.join(BASE_DIR, 'db_project/certificates/server-ca.pem'),
+            "sslcert": os.path.join(BASE_DIR, 'db_project/certificates/client-cert.pem'),
+            "sslkey": os.path.join(BASE_DIR, 'db_project/certificates/client-key.pem')
+        }
     }
 }
 

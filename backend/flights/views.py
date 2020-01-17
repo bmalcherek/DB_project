@@ -333,7 +333,7 @@ def reservations_list(request):
 
     elif request.method == 'POST':
         data = {
-            'user': request.user.id,
+            'user': request.user.username,
             'flight': request.data['flight'],
             'price': request.data['price']
         }
