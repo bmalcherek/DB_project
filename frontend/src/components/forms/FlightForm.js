@@ -130,13 +130,13 @@ const FlightForm = props => {
 	};
 
 	const airlinesOptions = airlines.map(airline => (
-		<MenuItem key={airline.id} value={airline.id}>
+		<MenuItem key={airline.id} value={airline.icao_code}>
 			{airline.name}
 		</MenuItem>
 	));
 
 	const fromAirportOptions = airports.map(airport => (
-		<MenuItem key={airport.id} value={airport.id}>
+		<MenuItem key={airport.id} value={airport.ICAO_code}>
 			{airport.IATA_code}
 		</MenuItem>
 	));
@@ -144,7 +144,7 @@ const FlightForm = props => {
 	const toAirportOptions = airports
 		.filter(airport => fromAirport.id !== airport.id)
 		.map(airport => (
-			<MenuItem key={airport.id} value={airport.id}>
+			<MenuItem key={airport.id} value={airport.ICAO_code}>
 				{airport.IATA_code}
 			</MenuItem>
 		));
@@ -158,7 +158,7 @@ const FlightForm = props => {
 		));
 
 	const airplaneOptions = airplanes.map(airplane => (
-		<MenuItem key={airplane.id} value={airplane.id}>
+		<MenuItem key={airplane.id} value={airplane.registration}>
 			{airplane.registration}
 		</MenuItem>
 	));

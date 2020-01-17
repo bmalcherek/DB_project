@@ -13,12 +13,14 @@ const FlightsList = () => {
 	const [toAirportFilter, setToAirportFilter] = useState("");
 	const [crewFilter, setCrewFilter] = useState("");
 	const [airplaneFilter, setAirplaneFilter] = useState("");
-	// const [departureDateFilter, setDepartureDateFilter] = useState('')
-	// const [arrivalDateFilter, setArrivalDateFilter] = useState('')
 	const [placesFilter, setPlacesFilter] = useState("");
 	const [orderBy, setOrderBy] = useState("name");
 	const [order, setOrder] = useState("desc");
 	const [edited, setEdited] = useState(false);
+
+	useEffect(() => {
+		document.title = "Flights List";
+	}, []);
 
 	useEffect(() => {
 		const response = fetchData("api/flights/");
@@ -61,6 +63,8 @@ const FlightsList = () => {
 		}
 	}, [flights, orderBy, order]);
 
+	const dateOptions = { hour: "numeric", minute: "numeric" };
+
 	const flightsTableRows = flights.map(flight => (
 		<TableRow key={flight.id}>
 			<TableCell>{flight.flight_number}</TableCell>
@@ -69,8 +73,15 @@ const FlightsList = () => {
 			<TableCell align="right">{flight.to_airport}</TableCell>
 			<TableCell align="right">{flight.crew}</TableCell>
 			<TableCell align="right">{flight.airplane}</TableCell>
-			<TableCell align="right">{flight.departure_date}</TableCell>
-			<TableCell align="right">{flight.arrival_date}</TableCell>
+			<TableCell align="right">
+				{new Date(flight.departure_date).toLocaleDateString(
+					"pl-PL",
+					dateOptions
+				)}
+			</TableCell>
+			<TableCell align="right">
+				{new Date(flight.arrival_date).toLocaleDateString("pl-PL", dateOptions)}
+			</TableCell>
 			<TableCell align="right">{flight.num_places}</TableCell>
 			<TableActions
 				editLink={`/flights/${flight.id}/edit`}

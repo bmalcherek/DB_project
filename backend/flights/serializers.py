@@ -77,6 +77,26 @@ class CrewMemberSerializer (serializers.ModelSerializer):
 
 
 class FlightSerializer (serializers.ModelSerializer):
+    airline = serializers.SlugRelatedField(
+        slug_field='icao_code',
+        queryset=models.Airline.objects.all()
+    )
+
+    from_airport = serializers.SlugRelatedField(
+        slug_field="ICAO_code",
+        queryset=models.Airport.objects.all()
+    )
+
+    to_airport = serializers.SlugRelatedField(
+        slug_field="ICAO_code",
+        queryset=models.Airport.objects.all()
+    )
+
+    airplane = serializers.SlugRelatedField(
+        slug_field="registration",
+        queryset=models.Airplane.objects.all()
+    )
+
     class Meta:
         model = models.Flight
         fields = '__all__'
