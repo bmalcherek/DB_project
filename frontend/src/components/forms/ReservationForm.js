@@ -56,7 +56,7 @@ const ReservationForm = props => {
 			const response = fetchData(`api/reservations/${reservationID}/`);
 			response.then(res => {
 				setFlight(res.data.flight);
-				setPrice(res.data.flight);
+				setPrice(res.data.price);
 			});
 		}
 	}, [reservationID, props.edit]);
@@ -89,7 +89,7 @@ const ReservationForm = props => {
 	};
 
 	const flightsOptions = flights.map(flight => (
-		<MenuItem key={flight.id} value={flight.id}>
+		<MenuItem key={flight.id} value={flight.flight_number}>
 			{flight.flight_number}
 		</MenuItem>
 	));

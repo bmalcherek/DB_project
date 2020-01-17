@@ -103,6 +103,16 @@ class FlightSerializer (serializers.ModelSerializer):
 
 
 class ReservationSerializer (serializers.ModelSerializer):
+    flight = serializers.SlugRelatedField(
+        slug_field="flight_number",
+        queryset=models.Flight.objects.all()
+    )
+
+    user = serializers.SlugRelatedField(
+        slug_field="username",
+        read_only=True
+    )
+
     class Meta:
         model = models.Reservation
         fields = '__all__'
