@@ -55,6 +55,11 @@ class AirlineSerializer (serializers.ModelSerializer):
 
 
 class CrewSerializer (serializers.ModelSerializer):
+    airline = serializers.SlugRelatedField(
+        slug_field='name',
+        queryset=models.Airline.objects.all()
+    )
+
     class Meta:
         model = models.Crew
         fields = '__all__'
