@@ -44,6 +44,11 @@ class AirplaneSerializer (serializers.ModelSerializer):
 
 
 class AirlineSerializer (serializers.ModelSerializer):
+    base_airport = serializers.SlugRelatedField(
+        slug_field="name",
+        queryset=models.Airport.objects.all()
+    )
+
     class Meta:
         model = models.Airline
         fields = '__all__'

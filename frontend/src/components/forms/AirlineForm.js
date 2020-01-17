@@ -98,7 +98,7 @@ const AirlineForm = props => {
 	};
 
 	const airportOptions = airports.map(airport => (
-		<MenuItem key={airport.id} value={airport.id}>
+		<MenuItem key={airport.id} value={airport.name}>
 			{airport.name}
 		</MenuItem>
 	));
