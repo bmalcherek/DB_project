@@ -36,7 +36,7 @@ const CrewMembersList = () => {
 							.toLowerCase()
 							.startsWith(nameFilter.toLowerCase()) &&
 						row.job_title
-							.toStirng()
+							.toString()
 							.toLowerCase()
 							.startsWith(jobTitleFilter.toLowerCase())
 					);

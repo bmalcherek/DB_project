@@ -106,7 +106,7 @@ const CrewMemberForm = props => {
 	};
 
 	const airlinesOptions = airlines.map(airline => (
-		<MenuItem key={airline.id} value={airline.id}>
+		<MenuItem key={airline.id} value={airline.name}>
 			{airline.name}
 		</MenuItem>
 	));
