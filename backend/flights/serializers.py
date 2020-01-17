@@ -16,7 +16,10 @@ class CountrySerializer (serializers.ModelSerializer):
 
 
 class AirportSerializer (serializers.ModelSerializer):
-    country = CountrySerializer()
+    country = serializers.SlugRelatedField(
+        slug_field="name",
+        queryset=models.Country.objects.all()
+    )
 
     class Meta:
         model = models.Airport

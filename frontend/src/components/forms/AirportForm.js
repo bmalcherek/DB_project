@@ -52,7 +52,9 @@ const AirportForm = props => {
 
 	useEffect(() => {
 		const response = fetchData("api/countries/");
-		response.then(res => setCountries(res.data));
+		response.then(res => {
+			setCountries(res.data);
+		});
 
 		if (props.edit) {
 			const response = fetchData(`api/airports/${airportID}/`);
@@ -99,7 +101,6 @@ const AirportForm = props => {
 		}
 		response.then(() => history.push("/airports"));
 		response.catch(err => {
-			console.log(err.response.data);
 			let newErrors = {};
 			for (var key in errors) {
 				if (key in err.response.data) {
@@ -113,7 +114,7 @@ const AirportForm = props => {
 	};
 
 	const countriesOptions = countries.map(country => (
-		<MenuItem key={country.id} value={country.id}>
+		<MenuItem key={country.id} value={country.name}>
 			{country.name}
 		</MenuItem>
 	));

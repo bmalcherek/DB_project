@@ -42,7 +42,6 @@ const CrewMembersList = () => {
 					);
 				})
 			);
-			setCrewMembers(members);
 		}
 	}, [ogCrewMembers, nameFilter, jobTitleFilter]);
 

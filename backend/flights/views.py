@@ -102,7 +102,7 @@ def country_detail(request, country_id):
 class AirportsList (generics.ListCreateAPIView):
     queryset = Airport.objects.all()
     serializer_class = AirportSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
