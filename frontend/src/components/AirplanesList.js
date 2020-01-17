@@ -70,7 +70,7 @@ const AirplanesList = () => {
 	const headers = [
 		{ align: "inherit", name: "Registration" },
 		{ align: "right", name: "Produced" },
-		{ align: "right", name: "Airplane Model ID" }
+		{ align: "right", name: "Airplane Model" }
 	];
 
 	const handleOrder = name => {

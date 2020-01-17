@@ -100,7 +100,7 @@ const AirplaneForm = props => {
 	};
 
 	const airplaneModelOptions = airplaneModels.map(airplaneModel => (
-		<MenuItem key={airplaneModel.id} value={airplaneModel.id}>
+		<MenuItem key={airplaneModel.id} value={airplaneModel.name}>
 			{airplaneModel.name}
 		</MenuItem>
 	));
