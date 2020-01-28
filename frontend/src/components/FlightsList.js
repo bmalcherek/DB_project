@@ -40,7 +40,8 @@ const FlightsList = () => {
 						row.airline.toString().startsWith(airlineFilter) &&
 						row.from_airport.toString().startsWith(fromAirportFilter) &&
 						row.to_airport.toString().startsWith(toAirportFilter) &&
-						row.crew.toString().startsWith(crewFilter) &&
+						row.crew ? row.crew.toString().startsWith(crewFilter) : true &&
+//						row.crew.toString().startsWith(crewFilter) &&
 						row.airplane.toString().startsWith(airplaneFilter) &&
 						row.num_places.toString().startsWith(placesFilter)
 				)
@@ -71,7 +72,7 @@ const FlightsList = () => {
 			<TableCell align="right">{flight.airline}</TableCell>
 			<TableCell align="right">{flight.from_airport}</TableCell>
 			<TableCell align="right">{flight.to_airport}</TableCell>
-			<TableCell align="right">{flight.crew}</TableCell>
+			<TableCell align="right">{flight.crew ? flight.crew : ''}</TableCell>
 			<TableCell align="right">{flight.airplane}</TableCell>
 			<TableCell align="right">
 				{new Date(flight.departure_date).toLocaleDateString(

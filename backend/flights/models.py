@@ -68,6 +68,11 @@ class Reservation(models.Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
     price = models.FloatField()
 
+    class Meta:
+        db_constraints = {
+            'prive_above_zero' : 'check (price > 0)',
+        }
+
 def create_reservation(sender, **kwargs):
     if kwargs['created']:
         if kwargs['instance'].flight.num_places < kwargs['instance'].places or kwargs['instance'].places <= 0:

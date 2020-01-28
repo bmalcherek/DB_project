@@ -77,12 +77,18 @@ const ReservationForm = props => {
 		response.then(() => history.push("/reservations"));
 		response.catch(err => {
 			let newErrors = {};
-			for (var key in errors) {
-				if (key in err.response.data) {
-					newErrors[key] = err.response.data[key][0];
-				} else {
-					newErrors[key] = "";
+//			console.log(err.response.data)
+			try {
+				for (var key in errors) {
+					if (key in err.response.data) {
+						newErrors[key] = err.response.data[key][0];
+					} else {
+						newErrors[key] = "";
+					}
 				}
+			} catch {
+				newErrors.flight = '';
+				newErrors.price = "Price cannot be less than 0";
 			}
 			setErrors(newErrors);
 		});
